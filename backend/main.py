@@ -6,7 +6,10 @@ import os
 import numpy as np
 
 app  = FastAPI()
-conn = psycopg2.connect(dsn=os.getenv("POSTGRES_URL"))
+dsn = os.getenv("POSTGRES_URL") \
+      or "postgresql://smartshopper:strongpassword@localhost:5432/smartshopper"
+conn = psycopg2.connect(dsn)
+
 
 class RankReq(BaseModel):
     ingredients: list[str]

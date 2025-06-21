@@ -3,8 +3,10 @@ import os, json, decimal, psycopg2, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
+dsn = os.getenv("POSTGRES_URL") \
+      or "postgresql://smartshopper:strongpassword@localhost:5432/smartshopper"
+conn = psycopg2.connect(dsn)
 
-conn = psycopg2.connect(os.getenv("POSTGRES_URL"))
 cur  = conn.cursor()
 
 cur.execute("""
@@ -20,7 +22,7 @@ CREATE TABLE IF NOT EXISTS review (
 """)
 
 # 1. load prices
-with open(DATA / "storeprice.json") as f:
+with open(DATA / "storepriceTEST.json") as f:
     for row in json.load(f):                     # [{store_id,item,price}, …]
         cur.execute(
             "INSERT INTO price VALUES (%s,%s,%s)",
@@ -29,7 +31,7 @@ with open(DATA / "storeprice.json") as f:
         )
 
 # 2. load reviews
-with open(DATA / "reviews.json") as f:
+with open(DATA / "reviewsTEST.json") as f:
     for row in json.load(f):                     # [{store_id,stars}, …]
         cur.execute(
             "INSERT INTO review VALUES (%s,%s)",
