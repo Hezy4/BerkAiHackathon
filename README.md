@@ -1,125 +1,127 @@
-````markdown
-# UC Berkeley AI Hackathon 2025  
-### “Smart-Shopper” — Multi-Agent Price & Proximity Recommender
+# UC Berkeley AI Hackathon 2025
 
-> **Goal (24 hrs):** Build a two-pane web app that reads local store-catalog data and, using a “kitchen-sink” stack of sponsor APIs, tells users where to shop based on **price, quality,** and **distance**.
+### **Smart-Shopper** — “Where should I buy it, and why?”
 
----
-
-## 1 · Why it matters
-Finding the best place to buy groceries isn’t just about the cheapest price—it’s a trade-off between cost, product quality, and how far you have to travel. Our prototype answers that in real time, and shows **why** a store was recommended.
+> **24-hour mission:** Build a split-screen web app that ingests store-catalog data and recommends the best store based on **price, quality,** and **distance**—using only sponsor APIs that add *real* value.
 
 ---
 
-## 2 · Key Features
-| Pane | Functionality | APIs/Tools |
-|------|---------------|------------|
-| **Left (Map)** | Interactive map with store pins ➜ hover for quick summary; click syncs chat | **Leaflet/Mapbox**, **Groq** (ultra-fast hover summaries) |
-| **Right (Chat)** | Natural-language conversation; dynamic recommendations with inline “Open on Map” buttons | **Google Gemini**, **Anthropic Claude** (explain-my-ranking), **Letta** agent router |
-| **Backend** | Score stores via weighted formula (price, quality, distance) | Custom FastAPI + **Fetch.ai** (geo/distances) |
-| **ETL / Data** | Ingest & normalize catalogs (JSON → Postgres) | **Orkes Conductor** workflow |
+## 1 · Problem & vision
+
+Shoppers weigh three constants:
+
+1. **Cheap** – keep the receipt small
+2. **Good** – don’t sacrifice quality
+3. **Close** – limit travel time
+
+Smart-Shopper balances all three in real-time, then *explains the trade-off* in plain language.
 
 ---
 
-## 3 · Sponsor Tool Integration at a Glance
-| Tool | Role in App |
-|------|-------------|
-| **Letta** | Fronts all LLM calls, routing to Gemini/Groq/Claude based on task (ranking, summary, explanation) |
-| **Google Gemini** | Main chat reasoning + ranking scoring |
-| **Groq** | 1-shot 60-token store hover blurbs in \<50 ms |
-| **Fetch.ai** | Address-to-lat/long geocoding + Haversine distance |
-| **Anthropic Claude** | “Why did you choose this store?” detailed explanations |
-| **Orkes Conductor** | Kick-off ETL → Postgres → daily catalog refresh |
+## 2 · Core Feature Matrix
+
+| Pane             | User Experience                                                                                   | Tech / Sponsor                                                                    |
+| ---------------- | ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| **Left (Map)**   | Leaflet map with store pins → hover shows a 50-word blurb; click syncs chat                       | **Leaflet/Mapbox**, **Groq** LLM (ultra-fast micro-summaries)                     |
+| **Right (Chat)** | Conversational assistant recommends stores, embeds “Open on Map” buttons, justifies every ranking | **Letta** agent → routes reasoning calls to an underlying **Google Gemini** model |
+| **Backend**      | Real-time scoring (price, quality, distance) with adjustable sliders; REST + WebSocket            | **FastAPI**, **PostgreSQL**, **Fetch.ai** (geocode & distance)                    |
+| **Data**         | One-shot JSON parser → DB seed script (python)                                                    | —                                                                                 |
+
+> **Why these APIs and only these?**
+> • **Letta** simplifies LLM orchestration + function calls; we point it at Gemini and gain agent tooling.
+> • **Groq** is ideal for sub-100 ms hover blurbs.
+> • **Fetch.ai** gives drop-in geospatial helpers.
+> Any other sponsor would be overhead for this scope.
 
 ---
 
-## 4 · Folder Structure
-```text
-├── backend/
-│   ├── main.py          # FastAPI entry
-│   ├── ranking.py       # weighted score
-│   └── workflows/       # Orkes JSON defs
-├── frontend/
-│   ├── src/
-│   │   ├── App.jsx      # two-pane layout
-│   │   ├── MapPane.jsx  # Leaflet map + Groq hover
-│   │   └── ChatPane.jsx # Gemini/Claude streaming
-│   └── vite.config.js
-├── data/
-│   └── storeprice.json  # sample catalog (10 stores) :contentReference[oaicite:0]{index=0}
-└── README.md            # you are here
-````
+## 3 · Project Layout
+
+```
+backend/
+  main.py            # FastAPI entry
+  ranking.py         # scoring logic
+  data_seed.py       # parse JSON → Postgres
+frontend/
+  src/
+    App.jsx          # two-pane flex layout
+    MapPane.jsx      # Leaflet + Groq hover
+    ChatPane.jsx     # Letta-streamed chat
+data/
+  storeprice.json    # sample catalog
+README.md
+```
 
 ---
 
-## 5 · Quick-Start (local dev)
+## 4 · Local Dev Quick-Start
 
 ```bash
-# 1. clone && install
-git clone <repo> && cd repo
-pnpm i && cd backend && pip install -r requirements.txt
+# clone
+git clone <repo> && cd <repo>
 
-# 2. env vars (examples)
+# install deps
+pnpm i
+python -m venv .venv && source .venv/bin/activate
+pip install -r backend/requirements.txt
+
+# environment
 export LETTA_API_KEY=...
-export GEMINI_API_KEY=...
 export GROQ_API_KEY=...
 export FETCHAI_API_KEY=...
-export CLAUDE_API_KEY=...
 export POSTGRES_URL=postgres://...
+# Letta will forward to your Gemini key internally or via its settings
 
-# 3. run services
-cd backend && uvicorn main:app --reload
-cd ../frontend && pnpm dev
+# seed + run
+python backend/data_seed.py
+uvicorn backend.main:app --reload      # API
+pnpm --filter frontend dev             # React/Vite
 ```
 
 ---
 
-## 6 · 24-Hour Sprint Roadmap
+## 5 · Scoring Formula
 
-| Time (hrs) | ✅    | Milestone & Tasks                                                                      | Owners      |
-| ---------- | ---- | -------------------------------------------------------------------------------------- | ----------- |
-| **0-2**    | \[ ] | Kickoff, clone repo, env vars, task board                                              | All         |
-| **2-4**    | \[ ] | **ETL**: parse `storeprice.json`, geo-enrich via Fetch.ai → load to Postgres via Orkes | *Data Lead* |
-| **4-6**    | \[ ] | **Backend skeleton** (FastAPI), `/rank` & `/summary` endpoints                         | *Backend*   |
-| **6-9**    | \[ ] | Integrate Letta router → Gemini & Claude; unit tests for ranking logic                 | *AI Lead*   |
-| **9-12**   | \[ ] | Front-end scaffolding (Vite + React), two-pane layout, Leaflet map                     | *FE Lead*   |
-| **12-15**  | \[ ] | Wire Groq hover summaries; WebSocket chat stream                                       | *FE/AI*     |
-| **15-18**  | \[ ] | Slider UI for weight tuning; click-to-sync map ↔ chat                                  | *UX*        |
-| **18-20**  | \[ ] | **Explain-my-ranking** w/ Claude; mobile tweaks                                        | *AI/FE*     |
-| **20-22**  | \[ ] | Perf pass (Gemini streaming, Groq batch, DB indexes)                                   | *All*       |
-| **22-24**  | \[ ] | Record 90-sec demo video, update README, submit 🎉                                     | *All*       |
+$$
+\text{rankScore} = 
+w_p \cdot \text{normPrice} +
+w_q \cdot \text{qualityScore} +
+w_d \cdot \text{distanceKm}
+$$
+
+Defaults: **wₚ = 0.5**, **w\_q = 0.3**, **w\_d = 0.2**.
+All inputs are min–max normalised so **lower = better**.
 
 ---
 
-## 7 · Scoring Formula (v1)
+## 6 · 24-Hour Task Board
 
-```text
-score =
-  w_price   * normalized_price   +
-  w_quality * quality_score      +
-  w_dist    * distance_km
-```
-
-* Default weights: `w_price = 0.5`, `w_quality = 0.3`, `w_dist = 0.2`
-* All terms min–max normalized (0 = best, 1 = worst).
-
----
-
-## 8 · Stretch Goals
-
-* 🛒 **“Build my cart”** — per-item price comparison across stores
-* 🔔 **Letta + Cloud Events** — send push when a price drops
-* 🤖 **RAG** — augment chat with weekly circular PDFs via Gemini 1.5 Pro Vision
-* 📱 **PWA** — offline catalog browsing
+| Hours       | ✅    | Deliverable                                               |
+| ----------- | ---- | --------------------------------------------------------- |
+| **0 – 2**   | \[ ] | Repo boot-strap, env-vars, Trello board                   |
+| **2 – 4**   | \[ ] | Parse `storeprice.json`, Fetch.ai geocode, seed Postgres  |
+| **4 – 7**   | \[ ] | FastAPI skeleton (`/rank`, `/summary`, WS chat stream)    |
+| **7 – 10**  | \[ ] | Letta agent → Gemini function-calling for ranking/explain |
+| **10 – 13** | \[ ] | React + Vite scaffold; split-pane layout                  |
+| **13 – 15** | \[ ] | Leaflet map, Groq hover summaries                         |
+| **15 – 17** | \[ ] | Map-to-chat sync; weight sliders; live re-rank            |
+| **17 – 20** | \[ ] | Mobile tweaks; cache Groq responses; DB indexes           |
+| **20 – 22** | \[ ] | QA + performance pass (Letta, latency budget)             |
+| **22 – 24** | \[ ] | 90-sec demo video, README polish, submit 🚀               |
 
 ---
 
-## 9 · License & Credits
+## 7 · Nice-to-Haves (only if time remains)
+
+* 🛒 **Per-item cart optimizer**
+* 🔔 **Price-drop push alerts** via Letta scheduled function
+* 📱 **PWA offline mode** (static tiles & catalog)
+
+---
+
+## 8 · License & Acknowledgements
 
 MIT.
-Powered by generous API credits from **Letta**, **Google**, **Groq**, **Fetch.ai**, **Anthropic**, and **Orkes**. Massive thanks to the **UC Berkeley AI Hackathon 2025** organizers.
+Thanks to **Letta**, **Groq**, and **Fetch.ai** for API credits, and to the UC Berkeley AI Hackathon crew for the caffeine.
 
-> *“Ship fast, break nothing, and save shoppers money.”*
-
-```
-```
+> *Ship fast, save shoppers, crash later.*
