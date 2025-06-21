@@ -1,0 +1,152 @@
+[
+  {
+    "Store": "Discount Depot",
+    "Items": [
+      {"Item": "Bread", "Price": 1.50, "Quality": "Middle"},
+      {"Item": "Eggs (dozen)", "Price": 1.75, "Quality": "Low"},
+      {"Item": "Milk (gallon)", "Price": 2.00, "Quality": "Middle"},
+      {"Item": "Butter (1 lb)", "Price": 2.25, "Quality": "Middle"},
+      {"Item": "Chicken Breast (1 lb)", "Price": 3.00, "Quality": "Low"},
+      {"Item": "Apples (1 lb)", "Price": 1.00, "Quality": "Middle"},
+      {"Item": "Cereal (box)", "Price": 2.00, "Quality": "Middle"},
+      {"Item": "Pasta (box)", "Price": 0.75, "Quality": "Middle"},
+      {"Item": "Ground Beef (1 lb)", "Price": 2.50, "Quality": "Low"},
+      {"Item": "Coffee (bag)", "Price": 4.50, "Quality": "Middle"}
+    ]
+  },
+  {
+    "Store": "Luxury Larder",
+    "Items": [
+      {"Item": "Bread", "Price": 7.50, "Quality": "High"},
+      {"Item": "Eggs (dozen)", "Price": 8.75, "Quality": "Middle"},
+      {"Item": "Milk (gallon)", "Price": 10.00, "Quality": "Middle"},
+      {"Item": "Butter (1 lb)", "Price": 11.25, "Quality": "High"},
+      {"Item": "Chicken Breast (1 lb)", "Price": 15.00, "Quality": "Middle"},
+      {"Item": "Apples (1 lb)", "Price": 5.00, "Quality": "High"},
+      {"Item": "Cereal (box)", "Price": 10.00, "Quality": "Middle"},
+      {"Item": "Pasta (box)", "Price": 3.75, "Quality": "Middle"},
+      {"Item": "Ground Beef (1 lb)", "Price": 12.50, "Quality": "High"},
+      {"Item": "Coffee (bag)", "Price": 22.50, "Quality": "High"}
+    ]
+  },
+  {
+    "Store": "Pristine Pantry",
+    "Items": [
+      {"Item": "Bread", "Price": 5.40, "Quality": "High"},
+      {"Item": "Eggs (dozen)", "Price": 6.30, "Quality": "High"},
+      {"Item": "Milk (gallon)", "Price": 7.20, "Quality": "High"},
+      {"Item": "Butter (1 lb)", "Price": 8.10, "Quality": "High"},
+      {"Item": "Chicken Breast (1 lb)", "Price": 10.80, "Quality": "High"},
+      {"Item": "Apples (1 lb)", "Price": 3.60, "Quality": "High"},
+      {"Item": "Cereal (box)", "Price": 7.20, "Quality": "High"},
+      {"Item": "Pasta (box)", "Price": 2.70, "Quality": "High"},
+      {"Item": "Ground Beef (1 lb)", "Price": 9.00, "Quality": "High"},
+      {"Item": "Coffee (bag)", "Price": 16.20, "Quality": "High"}
+    ]
+  },
+  {
+    "Store": "Cheapo Mart",
+    "Items": [
+      {"Item": "Bread", "Price": 2.40, "Quality": "Low"},
+      {"Item": "Eggs (dozen)", "Price": 2.80, "Quality": "Low"},
+      {"Item": "Milk (gallon)", "Price": 3.20, "Quality": "Low"},
+      {"Item": "Butter (1 lb)", "Price": 3.60, "Quality": "Low"},
+      {"Item": "Chicken Breast (1 lb)", "Price": 4.80, "Quality": "Low"},
+      {"Item": "Apples (1 lb)", "Price": 1.60, "Quality": "Low"},
+      {"Item": "Cereal (box)", "Price": 3.20, "Quality": "Low"},
+      {"Item": "Pasta (box)", "Price": 1.20, "Quality": "Low"},
+      {"Item": "Ground Beef (1 lb)", "Price": 4.00, "Quality": "Low"},
+      {"Item": "Coffee (bag)", "Price": 7.20, "Quality": "Low"}
+    ]
+  },
+  {
+    "Store": "Fresh Foods",
+    "Items": [
+      {"Item": "Bread", "Price": 3.60, "Quality": "High"},
+      {"Item": "Eggs (dozen)", "Price": 4.20, "Quality": "High"},
+      {"Item": "Milk (gallon)", "Price": 4.80, "Quality": "High"},
+      {"Item": "Butter (1 lb)", "Price": 5.40, "Quality": "High"},
+      {"Item": "Chicken Breast (1 lb)", "Price": 7.20, "Quality": "High"},
+      {"Item": "Apples (1 lb)", "Price": 2.40, "Quality": "High"},
+      {"Item": "Cereal (box)", "Price": 4.80, "Quality": "Middle"},
+      {"Item": "Pasta (box)", "Price": 1.80, "Quality": "Middle"},
+      {"Item": "Ground Beef (1 lb)", "Price": 6.00, "Quality": "Middle"},
+      {"Item": "Coffee (bag)", "Price": 10.80, "Quality": "High"}
+    ]
+  },
+  {
+    "Store": "Quick Stop",
+    "Items": [
+      {"Item": "Bread", "Price": 4.20, "Quality": "Low"},
+      {"Item": "Eggs (dozen)", "Price": 4.90, "Quality": "Low"},
+      {"Item": "Milk (gallon)", "Price": 5.60, "Quality": "Low"},
+      {"Item": "Butter (1 lb)", "Price": 6.30, "Quality": "Low"},
+      {"Item": "Chicken Breast (1 lb)", "Price": 8.40, "Quality": "Middle"},
+      {"Item": "Apples (1 lb)", "Price": 2.80, "Quality": "Low"},
+      {"Item": "Cereal (box)", "Price": 5.60, "Quality": "Low"},
+      {"Item": "Pasta (box)", "Price": 2.10, "Quality": "Low"},
+      {"Item": "Ground Beef (1 lb)", "Price": 7.00, "Quality": "Low"},
+      {"Item": "Coffee (bag)", "Price": 12.60, "Quality": "Low"}
+    ]
+  },
+  {
+    "Store": "The Corner Market",
+    "Items": [
+      {"Item": "Bread", "Price": 3.90, "Quality": "Middle"},
+      {"Item": "Eggs (dozen)", "Price": 4.55, "Quality": "Middle"},
+      {"Item": "Milk (gallon)", "Price": 5.20, "Quality": "Middle"},
+      {"Item": "Butter (1 lb)", "Price": 5.85, "Quality": "Middle"},
+      {"Item": "Chicken Breast (1 lb)", "Price": 7.80, "Quality": "Middle"},
+      {"Item": "Apples (1 lb)", "Price": 2.60, "Quality": "Middle"},
+      {"Item": "Cereal (box)", "Price": 5.20, "Quality": "Middle"},
+      {"Item": "Pasta (box)", "Price": 1.95, "Quality": "Middle"},
+      {"Item": "Ground Beef (1 lb)", "Price": 6.50, "Quality": "Middle"},
+      {"Item": "Coffee (bag)", "Price": 11.70, "Quality": "Middle"}
+    ]
+  },
+  {
+    "Store": "MegaMart",
+    "Items": [
+      {"Item": "Bread", "Price": 3.00, "Quality": "Middle"},
+      {"Item": "Eggs (dozen)", "Price": 3.50, "Quality": "Middle"},
+      {"Item": "Milk (gallon)", "Price": 4.00, "Quality": "Middle"},
+      {"Item": "Butter (1 lb)", "Price": 4.50, "Quality": "Middle"},
+      {"Item": "Chicken Breast (1 lb)", "Price": 6.00, "Quality": "Middle"},
+      {"Item": "Apples (1 lb)", "Price": 2.00, "Quality": "High"},
+      {"Item": "Cereal (box)", "Price": 4.00, "Quality": "Middle"},
+      {"Item": "Pasta (box)", "Price": 1.50, "Quality": "Middle"},
+      {"Item": "Ground Beef (1 lb)", "Price": 5.00, "Quality": "Middle"},
+      {"Item": "Coffee (bag)", "Price": 9.00, "Quality": "Middle"}
+    ]
+  },
+  {
+    "Store": "Organic Oasis",
+    "Items": [
+      {"Item": "Bread", "Price": 5.10, "Quality": "High"},
+      {"Item": "Eggs (dozen)", "Price": 5.95, "Quality": "High"},
+      {"Item": "Milk (gallon)", "Price": 6.80, "Quality": "High"},
+      {"Item": "Butter (1 lb)", "Price": 7.65, "Quality": "High"},
+      {"Item": "Chicken Breast (1 lb)", "Price": 10.20, "Quality": "High"},
+      {"Item": "Apples (1 lb)", "Price": 3.40, "Quality": "High"},
+      {"Item": "Cereal (box)", "Price": 6.80, "Quality": "High"},
+      {"Item": "Pasta (box)", "Price": 2.55, "Quality": "High"},
+      {"Item": "Ground Beef (1 lb)", "Price": 8.50, "Quality": "High"},
+      {"Item": "Coffee (bag)", "Price": 15.30, "Quality": "High"}
+    ]
+  },
+  {
+    "Store": "Value Valet",
+    "Items": [
+      {"Item": "Bread", "Price": 2.70, "Quality": "Low"},
+      {"Item": "Eggs (dozen)", "Price": 3.15, "Quality": "Middle"},
+      {"Item": "Milk (gallon)", "Price": 3.60, "Quality": "Low"},
+      {"Item": "Butter (1 lb)", "Price": 4.05, "Quality": "Low"},
+      {"Item": "Chicken Breast (1 lb)", "Price": 5.40, "Quality": "Low"},
+      {"Item": "Apples (1 lb)", "Price": 1.80, "Quality": "Low"},
+      {"Item": "Cereal (box)", "Price": 3.60, "Quality": "Middle"},
+      {"Item": "Pasta (box)", "Price": 1.35, "Quality": "Low"},
+      {"Item": "Ground Beef (1 lb)", "Price": 4.50, "Quality": "Low"},
+      {"Item": "Coffee (bag)", "Price": 8.10, "Quality": "Middle"}
+    ]
+  }
+]
