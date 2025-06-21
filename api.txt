@@ -2,3 +2,5 @@ Gemini Key:
 AIzaSyBQOOsa9wHyJLlpbTUyA9Jt30E17iq3sys
 Letta Key: 
 sk-let-OTc4ZTdiMWEtZjkwNi00NDkyLTg3MTUtYmMzMjI0N2RmZGM1OjUyY2ZmZmVkLWYxOGMtNDk4NC1iM2RkLWU2ZTQ1Y2RiYWQyYg==
+postgress password: 
+strongpassword
