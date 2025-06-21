@@ -493,16 +493,8 @@ function App() {
             
             {/* Grocery Store Markers */}
             {showMarkers && groceryStores.map((store, index) => {
-              // Different colors for different stores
-              const colors = [
-                'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
-                'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
-                'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-                'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png',
-                'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png',
-                'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png',
-                'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png'
-              ];
+              // Use red marker for all grocery stores
+              const redMarker = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png';
               
               return (
                 <Marker 
@@ -510,7 +502,7 @@ function App() {
                   position={[store.lat, store.lon]}
                   icon={new L.Icon({
                     ...DefaultIcon.options,
-                    iconUrl: colors[index % colors.length],
+                    iconUrl: redMarker,
                   })}
                 >
                   <Popup className="store-popup">
