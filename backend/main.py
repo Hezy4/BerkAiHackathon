@@ -2,6 +2,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import psycopg2
+import os
 import numpy as np
 
 app  = FastAPI()
