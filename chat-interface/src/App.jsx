@@ -1,7 +1,28 @@
 import { useState, useRef, useEffect } from 'react';
+import { FiSun, FiMoon } from 'react-icons/fi';
 import './App.css';
 
 function App() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  
+  // Toggle theme and save preference
+  const toggleTheme = () => {
+    const newMode = !isDarkMode;
+    setIsDarkMode(newMode);
+    document.documentElement.setAttribute('data-theme', newMode ? 'dark' : 'light');
+    localStorage.setItem('theme', newMode ? 'dark' : 'light');
+  };
+  
+  // Check for saved theme preference or system preference on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+      setIsDarkMode(true);
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  }, []);
   const [messages, setMessages] = useState([
     { text: "Hello! I'm your chatbot. How can I help you today?", sender: 'bot' }
   ]);
@@ -38,7 +59,14 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>React Chatbot</h1>
+        <h1>Grocery Assistant</h1>
+        <button 
+          onClick={toggleTheme} 
+          className="theme-toggle" 
+          aria-label={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          {isDarkMode ? <FiSun /> : <FiMoon />}
+        </button>
       </header>
       
       <div className="chat-container">
