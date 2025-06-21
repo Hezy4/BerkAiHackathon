@@ -193,6 +193,57 @@ function App() {
         rating: '4.2/5',
         description: 'Grocery store chain with a wide selection of food & household items, plus a pharmacy.'
       }
+    },
+    {
+      id: 'sample-5',
+      name: 'Mollie Stone\'s Market',
+      lat: 37.9440,
+      lon: -122.5480,
+      tags: {
+        'addr:street': '414 Miller Ave',
+        'addr:city': 'Mill Valley',
+        'addr:postcode': '94941',
+        phone: '(415) 388-3175',
+        website: 'https://www.molliestones.com',
+        opening_hours: '7:00 AM - 9:00 PM',
+        organic: 'Yes',
+        rating: '4.4/5',
+        description: 'Upscale grocery store offering organic produce, a deli counter & a selection of wine & beer.'
+      }
+    },
+    {
+      id: 'sample-6',
+      name: 'Good Earth Natural Foods',
+      lat: 37.9580,
+      lon: -122.5450,
+      tags: {
+        'addr:street': '720 Center Blvd',
+        'addr:city': 'Fairfax',
+        'addr:postcode': '94930',
+        phone: '(415) 453-0120',
+        website: 'https://goodearthnaturalfoods.com',
+        opening_hours: '7:00 AM - 9:00 PM',
+        organic: 'Yes',
+        rating: '4.6/5',
+        description: 'Longtime natural foods market with organic produce, bulk foods, vitamins & a juice bar.'
+      }
+    },
+    {
+      id: 'sample-7',
+      name: 'United Markets',
+      lat: 37.9490,
+      lon: -122.5300,
+      tags: {
+        'addr:street': '555 E Blithedale Ave',
+        'addr:city': 'Mill Valley',
+        'addr:postcode': '94941',
+        phone: '(415) 381-1500',
+        website: 'https://www.unitedmarketsmarin.com',
+        opening_hours: '6:00 AM - 11:00 PM',
+        organic: 'Partial',
+        rating: '4.3/5',
+        description: 'Local grocery chain with a wide selection of natural & organic foods, plus a deli & bakery.'
+      }
     }
   ];
 
@@ -447,7 +498,10 @@ function App() {
                 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
                 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
                 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-                'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png'
+                'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png',
+                'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png',
+                'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png',
+                'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png'
               ];
               
               return (
