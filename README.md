@@ -1,2 +1,2 @@
 # BerkAiHackathon2025
-## AI-Powered Groceries Price Index ##
+This project collects grocery prices from surrounding stores, along with your location and the locations of the stores. It leverages Google Gemini, Fetch.ai (with Google Maps extension), and Letta AI Agent Manager to analyze this data. By providing your needs and requirements (such as budget, quality preferences, etc.) through a user prompt, the system recommends the best nearby stores tailored to your criteria.
