@@ -6,7 +6,7 @@ import google.generativeai as genai
 # --- Configuration ---
 # IMPORTANT: Replace "YOUR_API_KEY_HERE" with the actual key you provided.
 # For better security, load this from an environment variable in a real project.
-API_KEY = "AIzaSyC0ldRJhUlCKMansoNzoiLbocjR2TI-bZ4" 
+API_KEY = "AIzaSyDtVqk3C3ApjL2l0g7JKhH3HbUL5mAtt80" 
 genai.configure(api_key=API_KEY)
 
 # Initialize the generative model
@@ -72,13 +72,17 @@ def analyze_and_find_stores(raw_request: str, conversation_history: list, stores
     **Your Reasoning Process:**
     1.  **Analyze Intent**: Determine if the "Latest User Request" is a follow-up/modification to the immediately preceding topic OR if it is a **completely new topic**.
     2.  **Handle Topic/Tier Changes**: If the latest request is a new topic or a different version of the same topic (e.g., "less expensive PC"), **IGNORE** previous lists and generate a **NEW** list.
-    3.  **Handle Q&A**: If the request is a simple question about the previous turn (e.g., "what are the parts?"), **re-affirm the previous list**.
+    3.  **Handle Q&A**: If the request is a simple question about the previous turn (e.g., "what are the parts?"), **re-affirm the previous list**, and ONLY EDIT the list, by swapping items that fit the users query better. 
 
     **Your Task:**
     Based on your reasoning, perform two final actions:
     1.  **Extract Final Items**: Create the single, definitive list of products the user needs now. For conceptual requests (e.g., "budget PC"), generate a reasonable list of specific components.
     2.  **Classify Final Category**: Determine the single, most appropriate shopping category for the final list from this list: {list(set(s['category'] for s in stores_db))}.
 
+    **Examples**
+    1. when ask to search for computer parts, ingredients, etc, make sure to refrence the internet to make sure the product youre recommending is the the right product in the right catagory. 
+       if the user asks for a CPu for example, look for products from electronics stores that are CPUs (Ryzen, Intel i-series, etc)
+    2. when the user switches subjetcs, as in asks a question where the last result is of a different catagory, RECOGNIZE that the user is requesting a NEW list. DO NOT get stuck. 
     **Output Format:**
     Respond with ONLY a valid JSON object with "items" and "category" keys.
     """
