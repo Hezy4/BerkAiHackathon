@@ -5,7 +5,7 @@ import google.generativeai as genai
 
 # --- Configuration ---
 # IMPORTANT: Replace "YOUR_API_KEY_HERE" with your actual key.
-API_KEY = "AIzaSyDtVqk3C3ApjL2l0g7JKhH3HbUL5mAtt80" 
+API_KEY = "INSERT_API_KEY_HERE!" 
 genai.configure(api_key=API_KEY)
 
 llm = genai.GenerativeModel('gemini-1.5-flash')
