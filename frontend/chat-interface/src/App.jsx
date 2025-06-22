@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 // Import is no longer needed as we'll use stores.json
-import { FiSun, FiMoon, FiMessageSquare } from 'react-icons/fi';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import { FiMessageSquare, FiMoon, FiSun } from 'react-icons/fi';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import './App.css';
 
 // Fix for default marker icons in Leaflet with Webpack
