@@ -4,3 +4,6 @@ psycopg2-binary
 numpy
 pydantic
 groq
+google-generativeai
+flask
+flask_cors
