@@ -26,23 +26,3 @@ storename = ""
 json_data = load_json_file('data/storepriceTEST.json')
 
 storeInfo = json.dumps(json_data, indent=2)  # indent for readability in the prompt
-
-# RUN! (chanqe this!)
-
-# Send data to agents
-user_request = input()
-
-agentOne = talk(AGENT1_ID, user_request)
-agentOneProcessed = ("AGENT ONE HERE: Heres the data you need to provide the user with the help they need. do not reply to me, reply to them. Store Info (JSON Format): \n(START OF FILE)\n" + storeInfo + "\n(END OF FILE)\nthe ingredients needed (JSON Format): " + agentOne + ". NOW: return the recommendation. ")
-
-output = talk(AGENT2_ID, agentOneProcessed)
-
-#print reply from agent 2
-print(output)
-
-#leave the chat open for follow up questions 
-while True:
-    userReply = input("\nAny questions?\n\n")
-    output = talk(AGENT2_ID, userReply)
-    print(output)
- 
