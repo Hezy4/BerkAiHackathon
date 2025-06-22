@@ -47,12 +47,12 @@ function App() {
   const startX = useRef(0);
   const startWidth = useRef(0);
   
-  // Load grocery stores from local JSON file
+  // Load grocery stores from backend API
   const fetchLocalGroceryStores = async () => {
     try {
-      const response = await fetch('/data/stores.json');
+      const response = await fetch('http://localhost:5001/api/stores');
       if (!response.ok) {
-        throw new Error('Failed to load stores data')
+        throw new Error('Failed to load stores data from server')
       }
       const data = await response.json();
       
