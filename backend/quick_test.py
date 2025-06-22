@@ -17,5 +17,5 @@ while True:
     agentTwo = talk(AGENT2_ID, userReply)
     print(agentTwo)
     if userReply == "break" or userReply=="quit":
-        
+
         break
