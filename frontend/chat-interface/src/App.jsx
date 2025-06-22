@@ -124,128 +124,27 @@ function App() {
     }
   };
   
-  // Sample grocery stores data for demonstration
-  const sampleGroceryStores = [
-    {
-      id: 'sample-1',
-      name: 'Whole Foods Market',
-      lat: 37.9489,
-      lon: -122.5472,
-      tags: {
-        'addr:street': '720 Sir Francis Drake Blvd',
-        'addr:city': 'Kentfield',
-        'addr:postcode': '94904',
-        phone: '(415) 925-9426',
-        website: 'https://www.wholefoodsmarket.com',
-        opening_hours: '8:00 AM - 10:00 PM',
-        organic: 'Yes',
-        rating: '4.5/5',
-        description: 'High-end grocery chain with a focus on natural & organic food items, plus household goods.'
+  // Function to load grocery stores data from JSON file
+  const loadGroceryStores = async () => {
+    try {
+      const response = await fetch('/data/stores.json');
+      if (!response.ok) {
+        throw new Error('Failed to load stores data');
       }
-    },
-    {
-      id: 'sample-2',
-      name: 'Woodlands Market',
-      lat: 37.9465,
-      lon: -122.5421,
-      tags: {
-        'addr:street': '720 College Ave',
-        'addr:city': 'Kentfield',
-        'addr:postcode': '94904',
-        phone: '(415) 924-1520',
-        website: 'https://www.woodlandsmarket.com',
-        opening_hours: '7:00 AM - 9:00 PM',
-        organic: 'Yes',
-        rating: '4.7/5',
-        description: 'Local market offering gourmet foods, organic produce & specialty items in a warm setting.'
-      }
-    },
-    {
-      id: 'sample-3',
-      name: 'Trader Joe\'s',
-      lat: 37.9542,
-      lon: -122.5353,
-      tags: {
-        'addr:street': '1599 S Novato Blvd',
-        'addr:city': 'Novato',
-        'addr:postcode': '94947',
-        phone: '(415) 897-1125',
-        website: 'https://www.traderjoes.com',
-        opening_hours: '8:00 AM - 9:00 PM',
-        organic: 'Partial',
-        rating: '4.6/5',
-        description: 'Grocery chain with a variety of signature items, plus produce, dairy & more.'
-      }
-    },
-    {
-      id: 'sample-4',
-      name: 'Safeway',
-      lat: 37.9520,
-      lon: -122.5400,
-      tags: {
-        'addr:street': '700 E Blithedale Ave',
-        'addr:city': 'Mill Valley',
-        'addr:postcode': '94941',
-        phone: '(415) 388-7252',
-        website: 'https://www.safeway.com',
-        opening_hours: '6:00 AM - 12:00 AM',
-        organic: 'Partial',
-        rating: '4.2/5',
-        description: 'Grocery store chain with a wide selection of food & household items, plus a pharmacy.'
-      }
-    },
-    {
-      id: 'sample-5',
-      name: 'Mollie Stone\'s Market',
-      lat: 37.9440,
-      lon: -122.5480,
-      tags: {
-        'addr:street': '414 Miller Ave',
-        'addr:city': 'Mill Valley',
-        'addr:postcode': '94941',
-        phone: '(415) 388-3175',
-        website: 'https://www.molliestones.com',
-        opening_hours: '7:00 AM - 9:00 PM',
-        organic: 'Yes',
-        rating: '4.4/5',
-        description: 'Upscale grocery store offering organic produce, a deli counter & a selection of wine & beer.'
-      }
-    },
-    {
-      id: 'sample-6',
-      name: 'Good Earth Natural Foods',
-      lat: 37.9580,
-      lon: -122.5450,
-      tags: {
-        'addr:street': '720 Center Blvd',
-        'addr:city': 'Fairfax',
-        'addr:postcode': '94930',
-        phone: '(415) 453-0120',
-        website: 'https://goodearthnaturalfoods.com',
-        opening_hours: '7:00 AM - 9:00 PM',
-        organic: 'Yes',
-        rating: '4.6/5',
-        description: 'Longtime natural foods market with organic produce, bulk foods, vitamins & a juice bar.'
-      }
-    },
-    {
-      id: 'sample-7',
-      name: 'United Markets',
-      lat: 37.9490,
-      lon: -122.5300,
-      tags: {
-        'addr:street': '555 E Blithedale Ave',
-        'addr:city': 'Mill Valley',
-        'addr:postcode': '94941',
-        phone: '(415) 381-1500',
-        website: 'https://www.unitedmarketsmarin.com',
-        opening_hours: '6:00 AM - 11:00 PM',
-        organic: 'Partial',
-        rating: '4.3/5',
-        description: 'Local grocery chain with a wide selection of natural & organic foods, plus a deli & bakery.'
-      }
+      const data = await response.json();
+      setGroceryStores(data);
+      return data;
+    } catch (error) {
+      console.error('Error loading grocery stores:', error);
+      setGroceryStores([]);
+      return [];
     }
-  ];
+  };
+  
+  // Load grocery stores data on component mount
+  useEffect(() => {
+    loadGroceryStores();
+  }, []);
 
   // Set the address location and fetch nearby grocery stores
   useEffect(() => {
@@ -507,28 +406,47 @@ function App() {
                 >
                   <Popup className="store-popup">
                     <div className="store-popup-content">
-                      <h3>{store.name}</h3>
-                      <div className="store-details">
-                        {store.tags.description && (
-                          <p className="store-description">{store.tags.description}</p>
+                      <div className="store-header">
+                        <h3>{store.name}</h3>
+                        {store.tags.rating && (
+                          <div className="store-rating">
+                            <span className="rating-star">★</span> {store.tags.rating}
+                          </div>
                         )}
-                        <div className="store-address">
-                          {store.tags['addr:street'] && (
-                            <div>{store.tags['addr:street']}</div>
-                          )}
-                          {store.tags['addr:city'] && store.tags['addr:postcode'] && (
-                            <div>{store.tags['addr:city']}, {store.tags['addr:postcode']}</div>
-                          )}
+                      </div>
+                      
+                      {store.tags.description && (
+                        <div className="store-description-container">
+                          <div className="store-description-icon">💬</div>
+                          <p className="store-description">{store.tags.description}</p>
                         </div>
+                      )}
+                      
+                      <div className="store-details">
+                        <div className="store-address">
+                          <div className="address-icon">📍</div>
+                          <div>
+                            {store.tags['addr:street'] && (
+                              <div className="address-street">{store.tags['addr:street']}</div>
+                            )}
+                            {store.tags['addr:city'] && store.tags['addr:postcode'] && (
+                              <div className="address-city">{store.tags['addr:city']}, {store.tags['addr:postcode']}</div>
+                            )}
+                          </div>
+                        </div>
+                        
                         <div className="store-info">
                           {store.tags.opening_hours && (
-                            <div><strong>Hours:</strong> {store.tags.opening_hours}</div>
-                          )}
-                          {store.tags.rating && (
-                            <div><strong>Rating:</strong> {store.tags.rating}</div>
+                            <div className="info-item">
+                              <span className="info-label">🕒 Hours:</span>
+                              <span className="info-value">{store.tags.opening_hours}</span>
+                            </div>
                           )}
                           {store.tags.organic && (
-                            <div><strong>Organic:</strong> {store.tags.organic}</div>
+                            <div className="info-item">
+                              <span className="info-label">🌱 Organic:</span>
+                              <span className="info-value">{store.tags.organic}</span>
+                            </div>
                           )}
                         </div>
                         <div className="store-contacts">

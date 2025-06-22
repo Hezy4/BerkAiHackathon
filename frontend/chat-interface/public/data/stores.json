@@ -1,0 +1,114 @@
+[
+  {
+    "id": "store-001",
+    "name": "Whole Foods Market",
+    "lat": 37.9489,
+    "lon": -122.5472,
+    "tags": {
+      "addr:street": "720 Sir Francis Drake Blvd",
+      "addr:city": "Kentfield",
+      "addr:postcode": "94904",
+      "opening_hours": "8:00 AM - 10:00 PM",
+      "organic": "Yes",
+      "rating": "4.5/5",
+      "description": "\"Step into the heart of healthy living at Whole Foods Market, located in the charming town of Kentfield. Our store offers an extensive selection of organic products, carefully curated to nourish your body and delight your taste buds. With a 4.5-star rating, our customers rave about our exceptional quality, friendly service, and commitment to providing a welcoming shopping experience that makes you feel at home.\""
+    },
+    "Items": [
+      {
+        "Item": "Bread",
+        "Price": 5.4,
+        "Quality": "High"
+      },
+      {
+        "Item": "Eggs (dozen)",
+        "Price": 6.3,
+        "Quality": "High"
+      },
+      {
+        "Item": "Milk (gallon)",
+        "Price": 7.2,
+        "Quality": "High"
+      },
+      {
+        "Item": "Butter (1 lb)",
+        "Price": 8.1,
+        "Quality": "High"
+      },
+      {
+        "Item": "Chicken Breast (1 lb)",
+        "Price": 10.8,
+        "Quality": "High"
+      },
+      {
+        "Item": "Apples (1 lb)",
+        "Price": 3.6,
+        "Quality": "High"
+      },
+      {
+        "Item": "Cereal (box)",
+        "Price": 7.2,
+        "Quality": "High"
+      },
+      {
+        "Item": "Pasta (box)",
+        "Price": 2.7,
+        "Quality": "High"
+      },
+      {
+        "Item": "Ground Beef (1 lb)",
+        "Price": 9.0,
+        "Quality": "High"
+      },
+      {
+        "Item": "Coffee (bag)",
+        "Price": 16.2,
+        "Quality": "High"
+      }
+    ]
+  },
+  {
+    "id": "store-002",
+    "name": "Trader Joe's",
+    "lat": 37.9542,
+    "lon": -122.5353,
+    "tags": {
+      "addr:street": "1599 S Novato Blvd",
+      "addr:city": "Novato",
+      "addr:postcode": "94947",
+      "opening_hours": "8:00 AM - 9:00 PM",
+      "organic": "Partial",
+      "rating": "4.6/5",
+      "description": "\"Step into the unique world of Trader Joe's, where the passion for quality and affordability meets the pursuit of healthier choices! Our 1599 S Novato Blvd location offers a delightful selection of partial organic products, carefully curated to satisfy your cravings and nourish your body. With a 4.6/5 rating, our Novato community raves about our exceptional selection, friendly staff, and unbeatable prices - come experience it for yourself!\""
+    }
+  },
+  {
+    "id": "store-003",
+    "name": "Safeway",
+    "lat": 37.952,
+    "lon": -122.54,
+    "tags": {
+      "addr:street": "700 E Blithedale Ave",
+      "addr:city": "Mill Valley",
+      "addr:postcode": "94941",
+      "opening_hours": "6:00 AM - 12:00 AM",
+      "organic": "Partial",
+      "rating": "4.2/5",
+      "description": "\"Experience the best of both worlds at Safeway Mill Valley, where you'll find a thoughtful selection of partial organic products to nourish your family and satisfy your taste buds. With a 4.2/5 rating, our dedicated team is committed to providing exceptional customer service and a welcoming shopping environment. Visit us today at 700 E Blithedale Ave and discover why we're the go-to grocery destination in Mill Valley!\""
+    }
+  },
+  {
+    "id": "store-004",
+    "name": "Mollie Stone's Market",
+    "lat": 37.944,
+    "lon": -122.548,
+    "tags": {
+      "addr:street": "414 Miller Ave",
+      "addr:city": "Mill Valley",
+      "addr:postcode": "94941",
+      "opening_hours": "7:00 AM - 9:00 PM",
+      "organic": "Yes",
+      "rating": "4.4/5",
+      "description": "\"Welcome to Mollie Stone's Market, your premier destination for fresh, organic produce and natural groceries in Mill Valley! With a 4.4/5 rating, our store is committed to providing you with the best organic options, expertly curated to nourish your body and delight your senses. Come visit us at 414 Miller Ave and discover why we're the go-to choice for health-conscious shoppers seeking high-quality, sustainable products.\""
+    }
+  }
+]

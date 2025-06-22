@@ -168,47 +168,178 @@ body {
 /* Store Popup Styles */
 .store-popup .leaflet-popup-content-wrapper {
   padding: 0;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   overflow: hidden;
+  border: 1px solid var(--color-border);
 }
 
 .store-popup .leaflet-popup-content {
   margin: 0;
-  width: 280px;
+  width: 320px;
+  max-height: 70vh;
+  overflow-y: auto;
 }
 
 .store-popup-content {
-  padding: 16px;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
-.store-popup h3 {
-  margin: 0 0 12px 0;
-  color: var(--color-text);
-  font-size: 1.1rem;
+.store-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 16px 12px;
+  background-color: var(--color-primary);
+  color: white;
+  margin-bottom: 0;
+}
+
+.store-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
   font-weight: 600;
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: 8px;
+  color: white;
+}
+
+.store-rating {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.rating-star {
+  color: #FFD700;
+  margin-right: 2px;
+}
+
+.store-description-container {
+  display: flex;
+  padding: 16px;
+  background-color: rgba(76, 175, 80, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  margin-bottom: 0;
+}
+
+.store-description-icon {
+  margin-right: 10px;
+  font-size: 1.2rem;
+  opacity: 0.8;
+  margin-top: 2px;
 }
 
 .store-description {
+  margin: 0;
   font-size: 0.9rem;
   color: var(--color-text);
-  margin: 0 0 12px 0;
-  line-height: 1.4;
+  line-height: 1.5;
+  flex: 1;
+  font-style: italic;
+}
+
+.store-details {
+  padding: 12px 16px 16px;
 }
 
 .store-address {
-  background-color: rgba(0, 0, 0, 0.03);
-  padding: 10px;
-  border-radius: 6px;
-  margin-bottom: 12px;
-  font-size: 0.9rem;
-  line-height: 1.4;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  padding: 12px;
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.dark .store-address {
+.address-icon {
+  font-size: 1.1rem;
+  margin-right: 10px;
+  margin-top: 2px;
+  opacity: 0.8;
+}
+
+.address-street {
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.address-city {
+  font-size: 0.9em;
+  color: var(--color-text-secondary);
+}
+
+.store-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.info-label {
+  font-weight: 500;
+  margin-right: 6px;
+  min-width: 70px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.info-value {
+  color: var(--color-text);
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .store-header {
+  background-color: var(--color-primary);
+}
+
+[data-theme="dark"] .store-address {
   background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .store-description-container {
+  background-color: rgba(102, 187, 106, 0.1);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .store-popup .leaflet-popup-content {
+    width: 280px;
+  }
+  
+  .store-header {
+    padding: 12px 12px 10px;
+  }
+  
+  .store-header h3 {
+    font-size: 1.1rem;
+  }
+  
+  .store-rating {
+    font-size: 0.8rem;
+    padding: 3px 6px;
+  }
+  
+  .store-description-container,
+  .store-details {
+    padding: 12px;
+  }
+  
+  .store-description {
+    font-size: 0.85rem;
+  }
 }
 
 .store-info {

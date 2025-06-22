@@ -1,0 +1,114 @@
+[
+  {
+    "id": "store-001",
+    "name": "Whole Foods Market",
+    "lat": 37.9489,
+    "lon": -122.5472,
+    "tags": {
+      "addr:street": "720 Sir Francis Drake Blvd",
+      "addr:city": "Kentfield",
+      "addr:postcode": "94904",
+      "opening_hours": "8:00 AM - 10:00 PM",
+      "organic": "Yes",
+      "rating": "4.5/5",
+      "description": "Whole Foods Market is a local grocery store offering a variety of products."
+    },
+    "Items": [
+      {
+        "Item": "Bread",
+        "Price": 5.4,
+        "Quality": "High"
+      },
+      {
+        "Item": "Eggs (dozen)",
+        "Price": 6.3,
+        "Quality": "High"
+      },
+      {
+        "Item": "Milk (gallon)",
+        "Price": 7.2,
+        "Quality": "High"
+      },
+      {
+        "Item": "Butter (1 lb)",
+        "Price": 8.1,
+        "Quality": "High"
+      },
+      {
+        "Item": "Chicken Breast (1 lb)",
+        "Price": 10.8,
+        "Quality": "High"
+      },
+      {
+        "Item": "Apples (1 lb)",
+        "Price": 3.6,
+        "Quality": "High"
+      },
+      {
+        "Item": "Cereal (box)",
+        "Price": 7.2,
+        "Quality": "High"
+      },
+      {
+        "Item": "Pasta (box)",
+        "Price": 2.7,
+        "Quality": "High"
+      },
+      {
+        "Item": "Ground Beef (1 lb)",
+        "Price": 9.0,
+        "Quality": "High"
+      },
+      {
+        "Item": "Coffee (bag)",
+        "Price": 16.2,
+        "Quality": "High"
+      }
+    ]
+  },
+  {
+    "id": "store-002",
+    "name": "Trader Joe's",
+    "lat": 37.9542,
+    "lon": -122.5353,
+    "tags": {
+      "addr:street": "1599 S Novato Blvd",
+      "addr:city": "Novato",
+      "addr:postcode": "94947",
+      "opening_hours": "8:00 AM - 9:00 PM",
+      "organic": "Partial",
+      "rating": "4.6/5",
+      "description": "Trader Joe's is a local grocery store offering a variety of products."
+    }
+  },
+  {
+    "id": "store-003",
+    "name": "Safeway",
+    "lat": 37.952,
+    "lon": -122.54,
+    "tags": {
+      "addr:street": "700 E Blithedale Ave",
+      "addr:city": "Mill Valley",
+      "addr:postcode": "94941",
+      "opening_hours": "6:00 AM - 12:00 AM",
+      "organic": "Partial",
+      "rating": "4.2/5",
+      "description": "Safeway is a local grocery store offering a variety of products."
+    }
+  },
+  {
+    "id": "store-004",
+    "name": "Mollie Stone's Market",
+    "lat": 37.944,
+    "lon": -122.548,
+    "tags": {
+      "addr:street": "414 Miller Ave",
+      "addr:city": "Mill Valley",
+      "addr:postcode": "94941",
+      "opening_hours": "7:00 AM - 9:00 PM",
+      "organic": "Yes",
+      "rating": "4.4/5",
+      "description": "Mollie Stone's Market is a local grocery store offering a variety of products."
+    }
+  }
+]
