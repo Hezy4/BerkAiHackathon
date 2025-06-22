@@ -13,7 +13,9 @@ STORES_FILE = 'data/stores.json'
 
 # --- Flask App Initialization ---
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={
+    r"/api/*": {"origins": "*"}
+})
 
 # --- In-Memory Session Management ---
 # The conversation history is now stored in a simple global variable.
@@ -29,8 +31,15 @@ except FileNotFoundError:
     print(f"FATAL ERROR: {STORES_FILE} not found. Please ensure it's in the same directory as app.py.")
     STORES_DB = []
 
+# --- API Endpoints ---
+@app.route('/api/stores', methods=['GET'])
+def get_stores():
+    """Endpoint to get all grocery stores"""
+    try:
+        return jsonify(STORES_DB)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-# --- API Routes ---
 @app.route('/api/converse', methods=['POST'])
 def converse_with_agents():
     """A single endpoint that runs the full two-agent pipeline using in-memory context."""
