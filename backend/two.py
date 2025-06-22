@@ -66,22 +66,22 @@ def generate_recommendation(agent1_output: dict, preference: str, conversation_h
     prompt = f"""
     You are a concise and factual AI shopping assistant. Your goal is to give a direct and clear answer to the user's latest request using ONLY the provided data.
 
-    **User's Latest Request:** "{latest_user_request}"
+    <strong>User's Latest Request:</strong> "{latest_user_request}"
     
-    **Analysis Results (Ranked by user preference: '{preference}'):**
+    <strong>Analysis Results (Ranked by user preference: '{preference}'):</strong>
     ```json
     {formatted_options}
     ```
 
-    **Your Task:**
+    <strong>Your Task:</strong>
     Based on the user's latest request and the ranked analysis results, provide a helpful response.
-    1.  **Fact-Check Everything**: Your response MUST be based *exclusively* on the data provided in the "Analysis Results". Do not invent or misstate prices or quality scores.
-    2.  **Recommend & List Items**: When recommending an option, you MUST state the store name, total price, quality score, AND the full list of items that make up that recommendation.
-    3.  **Handle Follow-ups**: If the user asks for "more quality" or an "alternative", recommend the next best option from the ranked list, again including all its details (store, price, quality, items).
-    4.  **Be Direct**: Keep your response concise and to the point. Use markdown like **bold** to emphasize key information.
+    1.  <strong>Fact-Check Everything</strong>: Your response MUST be based *exclusively* on the data provided in the "Analysis Results". Do not invent or misstate prices or quality scores.
+    2.  <strong>Recommend & List Items</strong>: When recommending an option, you MUST state the store name, total price, quality score, AND the full list of items that make up that recommendation.
+    3.  <strong>Handle Follow-ups</strong>: If the user asks for "more quality" or an "alternative", recommend the next best option from the ranked list, again including all its details (store, price, quality, items).
+    4.  <strong>Be Direct</strong>: Keep your response concise and to the point. Use HTML <strong> tags to emphasize key information.
     
     Example response:
-    "For the best **quality**, I recommend **Organic Emporium**. The total cost is $25.50 for an average quality of 9.5/10. The items included are: organic flour, organic eggs, organic milk, and organic butter."
+    "For the best <strong>quality</strong>, I recommend <strong>Organic Emporium</strong>. The total cost is $25.50 for an average quality of 9.5/10. The items included are: organic flour, organic eggs, organic milk, and organic butter."
     """
     print("[Agent 2: Sending final prompt to Gemini for recommendation text...]")
     try:
