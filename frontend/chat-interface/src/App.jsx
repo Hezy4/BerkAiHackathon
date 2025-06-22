@@ -406,28 +406,47 @@ function App() {
                 >
                   <Popup className="store-popup">
                     <div className="store-popup-content">
-                      <h3>{store.name}</h3>
-                      <div className="store-details">
-                        {store.tags.description && (
-                          <p className="store-description">{store.tags.description}</p>
+                      <div className="store-header">
+                        <h3>{store.name}</h3>
+                        {store.tags.rating && (
+                          <div className="store-rating">
+                            <span className="rating-star">★</span> {store.tags.rating}
+                          </div>
                         )}
-                        <div className="store-address">
-                          {store.tags['addr:street'] && (
-                            <div>{store.tags['addr:street']}</div>
-                          )}
-                          {store.tags['addr:city'] && store.tags['addr:postcode'] && (
-                            <div>{store.tags['addr:city']}, {store.tags['addr:postcode']}</div>
-                          )}
+                      </div>
+                      
+                      {store.tags.description && (
+                        <div className="store-description-container">
+                          <div className="store-description-icon">💬</div>
+                          <p className="store-description">{store.tags.description}</p>
                         </div>
+                      )}
+                      
+                      <div className="store-details">
+                        <div className="store-address">
+                          <div className="address-icon">📍</div>
+                          <div>
+                            {store.tags['addr:street'] && (
+                              <div className="address-street">{store.tags['addr:street']}</div>
+                            )}
+                            {store.tags['addr:city'] && store.tags['addr:postcode'] && (
+                              <div className="address-city">{store.tags['addr:city']}, {store.tags['addr:postcode']}</div>
+                            )}
+                          </div>
+                        </div>
+                        
                         <div className="store-info">
                           {store.tags.opening_hours && (
-                            <div><strong>Hours:</strong> {store.tags.opening_hours}</div>
-                          )}
-                          {store.tags.rating && (
-                            <div><strong>Rating:</strong> {store.tags.rating}</div>
+                            <div className="info-item">
+                              <span className="info-label">🕒 Hours:</span>
+                              <span className="info-value">{store.tags.opening_hours}</span>
+                            </div>
                           )}
                           {store.tags.organic && (
-                            <div><strong>Organic:</strong> {store.tags.organic}</div>
+                            <div className="info-item">
+                              <span className="info-label">🌱 Organic:</span>
+                              <span className="info-value">{store.tags.organic}</span>
+                            </div>
                           )}
                         </div>
                         <div className="store-contacts">
