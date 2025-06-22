@@ -459,7 +459,7 @@ function App() {
                       checked={showMarkers} 
                       onChange={(e) => setShowMarkers(e.target.checked)} 
                     />
-                    Show Grocery Stores
+                    Show Stores
                   </label>
                 </div>
               </div>
