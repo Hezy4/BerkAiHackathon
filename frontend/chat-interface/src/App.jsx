@@ -124,10 +124,27 @@ function App() {
     }
   };
   
-  // Sample grocery stores data for demonstration
-  const sampleGroceryStores = [
-    
-  ];
+  // Function to load grocery stores data from JSON file
+  const loadGroceryStores = async () => {
+    try {
+      const response = await fetch('/data/stores.json');
+      if (!response.ok) {
+        throw new Error('Failed to load stores data');
+      }
+      const data = await response.json();
+      setGroceryStores(data);
+      return data;
+    } catch (error) {
+      console.error('Error loading grocery stores:', error);
+      setGroceryStores([]);
+      return [];
+    }
+  };
+  
+  // Load grocery stores data on component mount
+  useEffect(() => {
+    loadGroceryStores();
+  }, []);
 
   // Set the address location and fetch nearby grocery stores
   useEffect(() => {

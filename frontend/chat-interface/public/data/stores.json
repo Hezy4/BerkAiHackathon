@@ -1,0 +1,58 @@
+[
+  {
+    "id": "store-001",
+    "name": "Whole Foods Market",
+    "lat": 37.9489,
+    "lon": -122.5472,
+    "tags": {
+      "addr:street": "720 Sir Francis Drake Blvd",
+      "addr:city": "Kentfield",
+      "addr:postcode": "94904",
+      "opening_hours": "8:00 AM - 10:00 PM",
+      "organic": "Yes",
+      "rating": "4.5/5"
+    }
+  },
+  {
+    "id": "store-002",
+    "name": "Trader Joe's",
+    "lat": 37.9542,
+    "lon": -122.5353,
+    "tags": {
+      "addr:street": "1599 S Novato Blvd",
+      "addr:city": "Novato",
+      "addr:postcode": "94947",
+      "opening_hours": "8:00 AM - 9:00 PM",
+      "organic": "Partial",
+      "rating": "4.6/5"
+    }
+  },
+  {
+    "id": "store-003",
+    "name": "Safeway",
+    "lat": 37.9520,
+    "lon": -122.5400,
+    "tags": {
+      "addr:street": "700 E Blithedale Ave",
+      "addr:city": "Mill Valley",
+      "addr:postcode": "94941",
+      "opening_hours": "6:00 AM - 12:00 AM",
+      "organic": "Partial",
+      "rating": "4.2/5"
+    }
+  },
+  {
+    "id": "store-004",
+    "name": "Mollie Stone's Market",
+    "lat": 37.9440,
+    "lon": -122.5480,
+    "tags": {
+      "addr:street": "414 Miller Ave",
+      "addr:city": "Mill Valley",
+      "addr:postcode": "94941",
+      "opening_hours": "7:00 AM - 9:00 PM",
+      "organic": "Yes",
+      "rating": "4.4/5"
+    }
+  }
+]
