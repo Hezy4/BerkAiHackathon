@@ -20,8 +20,8 @@ def generate_store_description(store):
     tags = store.get('tags', {})
     category = store.get('category', 'grocery store')
     
-    # Prepare the prompt with strict instructions for a concise description
-    prompt = f"""Write exactly 3-5 sentences describing "{name}", a {category}. """
+    # Prepare the prompt with strict instructions for a very concise description
+    prompt = f"""Write exactly 3 sentences maximum describing "{name}", a {category}. """
     
     # Add location context if available
     if 'addr:street' in tags and 'addr:city' in tags:
@@ -30,7 +30,8 @@ def generate_store_description(store):
     # Add specific instructions for conciseness and quality
     prompt += """
     RULES:
-    - Must be exactly 3-5 complete sentences
+    - Must be 1-3 complete sentences only
+    - Maximum of 3 sentences total
     - Each sentence should be clear and concise
     - Focus on what makes this store unique
     - Include key products or services
@@ -38,10 +39,9 @@ def generate_store_description(store):
     - No bullet points or lists
     - No quotation marks
     - No line breaks or paragraph breaks
-    - No more than 5 sentences total
     
     Example format (but specific to this store):
-    "Store Name offers quality products in a welcoming environment. Our specialty is X and Y. Customers love our Z. Visit us today for exceptional service."
+    "Store Name offers quality products in a welcoming environment. Our specialty is X and Y. Customers love our Z."
     """
     
     # Add inventory context if available
