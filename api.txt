@@ -1,8 +1,7 @@
 Gemini Key:
 AIzaSyBQOOsa9wHyJLlpbTUyA9Jt30E17iq3sys
 Letta Key: 
-sk-let-OTc4ZTdiMWEtZjkwNi00NDkyLTg3MTUtYmMzMjI0N2RmZGM1OjUyY2ZmZmVkLWYxOGMtNDk4NC1iM2RkLWU2ZTQ1Y2RiYWQyYg==
-postgress password: 
+sk-let-OTc4ZTdiMWEtZjkwNi00NDkyLTg3MTUtYmMzMjI0N2RmZGM1OjQ5MWU4MmZjLTMzMmMtNDMyYy1hMmYwLWJiYzI3YWQyMTI0MQ==postgress password: 
 strongpassword
 
 Test Key:
@@ -10,3 +9,6 @@ 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
 
 Groq key:
 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
+
+Groq Key (formerly on "groqkey.txt"):
+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

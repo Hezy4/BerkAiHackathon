@@ -1,16 +1,46 @@
-# orchestrator.py  (5 lines that matter)
-from letta import Agent
+# orchestrator.py
 import json
+from letta_client import Letta, MessageCreate
 
-agent_ing = Agent("agent-4f57b6ad-6e5c-4d3e-a6ca-2082e33a8c2b")     # Ingredient Resolver
-agent_rec = Agent("agent-3914019f-6e8f-438d-92c3-605f38b79c9b")     # Store Recommender
+LE = Letta(token="sk-let-OTc4ZTdiMWEtZjkwNi00NDkyLTg3MTUtYmMzMjI0N2RmZGM1OjQ5MWU4MmZjLTMzMmMtNDMyYy1hMmYwLWJiYzI3YWQyMTI0MQ==")
 
-def smartshop(user_text, mode="balanced"):
-    # step 1  → ingredient list
-    ing_json = json.loads(agent_ing.chat(user_text).content)["ingredients"]
+AGENT1_ID = "agent-4f57b6ad-6e5c-4d3e-a6ca-2082e33a8c2b"   # Ingredient Resolver
+AGENT2_ID = "agent-3914019f-6e8f-438d-92c3-605f38b79c9b"   # Store Recommender
 
-    # step 2  → ranking answer
-    return agent_rec.chat({
-        "role":    "user",
-        "content": json.dumps({"ingredients": ing_json, "mode": mode})
-    }).content
+filepath = "majorstoreprice.json"
+
+def load_json_file(filepath):
+    with open(filepath, 'r') as f:
+        data = json.load(f)
+    return data
+
+def talk(agentid, user_message) -> str:
+
+    resp = LE.agents.messages.create(
+        agent_id=agentid,
+        messages=[MessageCreate(role="user", content=user_message)]
+    )
+    return resp.messages[-1].content      # already a simple string
+
+storename = ""
+json_data = load_json_file('data/storepriceTEST.json')
+
+storeInfo = json.dumps(json_data, indent=2)  # indent for readability in the prompt
+
+# RUN! (chanqe this!)
+
+# Send data to agents
+user_request = input()
+
+agentOne = talk(AGENT1_ID, user_request)
+agentOneProcessed = ("AGENT ONE HERE: Heres the data you need to provide the user with the help they need. do not reply to me, reply to them. Store Info (JSON Format): \n(START OF FILE)\n" + storeInfo + "\n(END OF FILE)\nthe ingredients needed (JSON Format): " + agentOne + ". NOW: return the recommendation. ")
+agentTwo = talk(AGENT2_ID, agentOneProcessed)
+#print reply from agent 2
+print(agentTwo)
+
+#leave the chat open for follow up questions 
+while True:
+    userReply = input("\nAny questions?\n\n")
+    agentTwo = talk(AGENT2_ID, userReply)
+    print(agentTwo)
+ 
