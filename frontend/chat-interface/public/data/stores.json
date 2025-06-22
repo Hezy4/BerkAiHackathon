@@ -11,7 +11,19 @@
       "opening_hours": "8:00 AM - 10:00 PM",
       "organic": "Yes",
       "rating": "4.5/5"
-    }
+    },
+    "Items": [
+      {"Item": "Bread", "Price": 5.40, "Quality": "High"},
+      {"Item": "Eggs (dozen)", "Price": 6.30, "Quality": "High"},
+      {"Item": "Milk (gallon)", "Price": 7.20, "Quality": "High"},
+      {"Item": "Butter (1 lb)", "Price": 8.10, "Quality": "High"},
+      {"Item": "Chicken Breast (1 lb)", "Price": 10.80, "Quality": "High"},
+      {"Item": "Apples (1 lb)", "Price": 3.60, "Quality": "High"},
+      {"Item": "Cereal (box)", "Price": 7.20, "Quality": "High"},
+      {"Item": "Pasta (box)", "Price": 2.70, "Quality": "High"},
+      {"Item": "Ground Beef (1 lb)", "Price": 9.00, "Quality": "High"},
+      {"Item": "Coffee (bag)", "Price": 16.20, "Quality": "High"}
+    ]
   },
   {
     "id": "store-002",
