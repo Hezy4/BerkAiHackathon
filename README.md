@@ -119,4 +119,4 @@ You must have both the backend and frontend servers running simultaneously in se
 
 You can now interact with the Shopping Assistant through the chat interface in your browser.
 
-### special thanks to sponsors Google and Groq for helping us power our project! ###
+### A special thanks to our sponsors Google and Groq for helping us power our project! ###
