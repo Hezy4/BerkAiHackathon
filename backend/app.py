@@ -63,8 +63,12 @@ def converse_with_agents():
     CONVERSATION_HISTORY.append({"role": "model", "content": final_recommendation})
     
     print("--- Pipeline End: In-memory history updated. ---")
-
-    return jsonify({"recommendation": final_recommendation})
+    
+    # Return the final response to the frontend
+    return jsonify({
+        "response": final_recommendation,
+        "status": "success"
+    })
 
 @app.route('/api/memory/clear', methods=['POST'])
 def clear_memory():

@@ -270,7 +270,7 @@ function App() {
     }
   }, []);
   const [messages, setMessages] = useState([
-    { text: "Hello! I'm your chatbot. How can I help you today?", sender: 'bot' }
+    { text: "Hello! I'm your grocery shopping assistant. What ingredients do you need help with today?", sender: 'bot' }
   ]);
   const [inputValue, setInputValue] = useState('');
   const messagesEndRef = useRef(null);
@@ -283,23 +283,51 @@ function App() {
     scrollToBottom();
   }, [messages]);
 
-  const handleSendMessage = (e) => {
+  const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim() || isLoading) return;
 
     // Add user message
     const userMessage = { text: inputValue, sender: 'user' };
     setMessages(prev => [...prev, userMessage]);
     setInputValue('');
+    setIsLoading(true);
 
-    // Simulate bot response
-    setTimeout(() => {
+    try {
+      // Call our Flask backend
+      const response = await fetch('http://localhost:5001/api/converse', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          request: inputValue,
+          preference: 'balanced' // or get this from user input
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get response from server');
+      }
+
+      const data = await response.json();
+      
+      // Add bot response
       const botMessage = { 
-        text: `I received: "${inputValue}"`,
+        text: data.response || "I'm not sure how to respond to that. Could you rephrase?",
         sender: 'bot' 
       };
       setMessages(prev => [...prev, botMessage]);
-    }, 1000);
+    } catch (error) {
+      console.error('Error sending message:', error);
+      const errorMessage = { 
+        text: "Sorry, I'm having trouble connecting to the server. Please try again later.",
+        sender: 'bot'
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -332,6 +360,15 @@ function App() {
                   {message.text}
                 </div>
               ))}
+              {isLoading && (
+                <div className="message bot">
+                  <div className="typing-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+              )}
               <div ref={messagesEndRef} />
             </div>
             
@@ -342,9 +379,18 @@ function App() {
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Type your message..."
                 className="message-input"
+                disabled={isLoading}
               />
-              <button type="submit" className="send-button">
-                <FiMessageSquare />
+              <button 
+                type="submit" 
+                className="send-button"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <div className="spinner"></div>
+                ) : (
+                  <FiMessageSquare />
+                )}
               </button>
             </form>
           </div>
