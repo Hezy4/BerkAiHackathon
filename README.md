@@ -1,156 +1,118 @@
-# UC Berkeley AI Hackathon 2025
+AI-Powered Shopping Assistant
+Overview
 
-### **Smart-Shopper** — “Where should I buy it, and why?”
+This project is an advanced, AI-powered shopping assistant designed to help users find the best local options for their shopping needs. It features a conversational chat interface where users can make natural language requests (e.g., "I need to build a budget gaming PC," "what do I need for pancakes?") and receive intelligent, context-aware recommendations.
 
-> **24-hour mission:** Build a split-screen web app that recommends the best store based on **price** and **quality** (with a **balanced** mode)—using only sponsor APIs that add *real* value.
+The application is comprised of two main components:
 
----
+    A Python Flask Backend that houses the AI logic, powered by the Google Gemini API.
 
-## 1 · Problem & Vision
+    A React Frontend that provides a user-friendly chat interface and a Leaflet.js map for visualizing store locations.
 
-Shoppers still juggle trade-offs, but for an MVP we ignore location:
+Architecture
+Backend (/backend)
 
-1. **Cheap** – keep the receipt small
-2. **Good** – don’t sacrifice quality
+The backend is built with Python and Flask, and its core intelligence resides in a unified agent model.
 
-Smart-Shopper weighs just those two factors (plus a 50 / 50 balanced option) and *explains the trade-off* in plain language.
+    app.py: The main Flask server application. It acts as the central controller, handling API requests, managing the conversation history (in-memory for the current session), and calling the primary agent logic.
 
----
+    one.py: This is the "brain" of the operation. It contains a single, powerful, unified agent (process_request) that:
 
-## 2 · Sponsor Stack (rationalised)
+        Analyzes the full conversation history to determine the user's intent and shopping category.
 
-| Component                         | Why It Matters                                        | Sponsor API                            |
-| --------------------------------- | ----------------------------------------------------- | -------------------------------------- |
-| **LLM Orchestration & Reasoning** | Two fast Gemini-Flash agents behind a single API key. | **Letta** (routes to Gemini 2.5 Flash) |
-| **Hover Micro-Summaries**         | Sub-100 ms, 60-token blurbs for map pins.             | **Groq** Llama-3-8B                    |
-| **Data Storage**                  | Catalog prices + review stars.                        | **PostgreSQL**                         |
-| **Front-End Maps**                | Pretty pins; no distance math.                        | **Leaflet / Mapbox tiles**             |
+        Assembles a list of required items by consulting the stores.json inventory, ensuring all recommendations are grounded in real-world stock.
 
-All other potential sponsor APIs were dropped because they added latency or duplicated work.
+        Calculates metrics (price, quality) for all valid shopping options.
 
----
+        Sorts the options based on user preference (price, quality, or balanced).
 
-## 3 · Two-Agent Architecture
+        Uses the Gemini API to formulate a final, helpful, natural-language response.
 
-| Agent                             | Job                                                                                                                             | Tool(s)                                      | Output                                                       |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- | ------------------------------------------------------------ |
-| **Agent 1 – Ingredient Resolver** | Turn any user text or dish name into a **canonical ingredient list**. Handles synonyms (*“flour” → “all-purpose flour”*).       | `getRecipeIngredients`, `normalizeItemNames` | `json { "ingredients": ["all-purpose flour","milk","egg"] }` |
-| **Agent 2 – Store Recommender**   | Call `/rank` with the ingredient list and a mode (`price`, `quality`, `balanced`). Return: **top pick, 3 runners-up, 1 avoid**. | `rankStores`                                 | Human-readable answer **+** JSON fallback block              |
+    stores.json: The "Digital Stockroom." A static JSON file containing all store data, including categories, locations, and detailed inventories.
 
-A five-line Python wrapper (`shop()`) chains Agent 1 → Agent 2.
+    requirements.txt: Lists all necessary Python dependencies.
 
----
+Frontend (/chat-interface)
 
-## 4 · Backend API
+The frontend is a modern React application built with Vite.
 
-### 4.1 `/rank` (POST)
+    src/App.jsx: The main component that renders both the chat interface and the map. It manages all frontend state, including chat messages and user preferences.
 
-```jsonc
-# request body
-{
-  "ingredients": ["all-purpose flour", "milk", "egg"],
-  "mode": "quality"          // "price" | "quality" | "balanced"
-}
-```
+    Functionality:
 
-| Mode       |  wprice | wquality |
-| ---------- | :-----: | :------: |
-| `price`    | **0.7** |    0.3   |
-| `quality`  |   0.3   |  **0.7** |
-| `balanced` |   0.5   |    0.5   |
+        Makes API calls to the /api/converse endpoint on the Flask backend.
 
-*Lower score = better. Price is min-max-normalised; quality uses (5★ − stars).*
+        Displays the conversational history between the user and the AI agent.
 
-```jsonc
-# example response
-{
-  "top_pick":   { "id":"st02","name":"FreshMart","reason":"4.8★ reviews & mid-pack price" },
-  "runners_up": [
-    { "id":"st05","name":"BudgetFoods","reason":"cheapest basket but lower stars" },
-    { "id":"st03","name":"GreenGrocer","reason":"best organic rating" },
-    { "id":"st01","name":"MegaStore","reason":"good price/quality blend" }
-  ],
-  "avoid":      { "id":"st04","name":"CornerExpress","reason":"high price, 3★ average" }
-}
-```
+        Provides controls for theme and recommendation preference.
 
----
+        Integrates a react-leaflet map to display store locations (functionality for linking chat recommendations to the map is a potential future enhancement).
 
-## 5 · Project Layout
+Setup & Installation
+Prerequisites
 
-```
-backend/
-  main.py            # FastAPI + /rank
-  ranking.py         # scoring logic
-  data_seed.py       # storeprice.json + reviews.json → Postgres
-frontend/
-  src/
-    App.jsx          # two-pane layout
-    MapPane.jsx      # Leaflet + Groq hover
-    ChatPane.jsx     # Letta chain (Agent1 → Agent2)
-data/
-  storeprice.json    # price catalog
-  reviews.json       # quality data
-README.md
-```
+    Python 3.8+ and Pip
 
----
+    Node.js and npm
 
-## 6 · Local Dev Quick-Start
+1. Backend Setup
 
-```bash
-# clone
-git clone <repo> && cd <repo>
+    Navigate to the backend directory:
 
-# install deps
-pnpm i
-python -m venv .venv && source .venv/bin/activate
-pip install -r backend/requirements.txt
+    cd backend
 
-# env
-export LETTA_API_KEY=...
-export GEMINI_API_KEY=...      # configured inside Letta
-export GROQ_API_KEY=...
-export POSTGRES_URL=postgres://...
-export MAPBOX_TOKEN=...        # if using Mapbox tiles
+    Create and activate a virtual environment:
+    For macOS/Linux:
 
-# seed + run
-python backend/data_seed.py
-uvicorn backend.main:app --reload
-pnpm --filter frontend dev
-```
+    python3 -m venv venv
+    source venv/bin/activate
 
----
+    For Windows:
 
-## 7 · 24-Hour Task Board (updated)
+    py -m venv venv
+    .\venv\Scripts\activate
 
-|       Hrs | ✅    | Deliverable                                 |
-| --------: | ---- | ------------------------------------------- |
-|   **0–2** | \[ ] | Repo boot-strap, env vars                   |
-|   **2–4** | \[ ] | Seed Postgres with prices + reviews         |
-|   **4–6** | \[ ] | FastAPI `/rank` with 2-factor weights       |
-|   **6–8** | \[ ] | Register `rankStores` tool in Letta         |
-|  **8–10** | \[ ] | Agent 1 prompt + tools                      |
-| **10–12** | \[ ] | Agent 2 prompt + tool                       |
-| **12–14** | \[ ] | Write 5-line Python chain wrapper           |
-| **14–17** | \[ ] | React two-pane scaffold; Groq hover         |
-| **17–19** | \[ ] | Connect chain to chat pane; add mode toggle |
-| **19–21** | \[ ] | Caching, DB indexes, mobile tweaks          |
-| **21–24** | \[ ] | Demo video, README polish, submit 🚀        |
+    Install Python dependencies:
 
----
+    pip install -r requirements.txt
 
-## 8 · Nice-to-Haves (post-demo)
+    Set Your API Key:
+    Open one.py and replace the placeholder "YOUR_API_KEY_HERE" with your actual Google Gemini API key.
 
-* 🛒 **Per-item cart optimiser**
-* 🔔 **Letta cron** – daily “price drop” alerts
-* 📱 **Offline PWA** – static catalog download
+2. Frontend Setup
 
----
+    Navigate to the frontend directory from the project root:
 
-## 9 · License & Thanks
+    cd chat-interface
 
-MIT.
-Huge thanks to **Letta**, **Groq**, and the UC Berkeley AI Hackathon crew for caffeine and credits.
+    Install Node.js dependencies:
 
-> *Ship fast, save shoppers, crash later.*
+    npm install
+
+Running the Application
+
+You must have both the backend and frontend servers running simultaneously in separate terminal windows.
+
+    Start the Backend Server:
+
+        Make sure you are in the /backend directory with your virtual environment activated.
+
+        Run the Flask application:
+
+        python app.py
+
+        The server will start and be listening on http://127.0.0.1:5001.
+
+    Start the Frontend Server:
+
+        Open a new terminal window.
+
+        Navigate to the /chat-interface directory.
+
+        Run the Vite development server:
+
+        npm run dev
+
+        Vite will automatically open the application in your default web browser, usually at http://localhost:5173.
+
+You can now interact with the Shopping Assistant through the chat interface in your browser.
