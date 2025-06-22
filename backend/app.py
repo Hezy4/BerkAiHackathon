@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 # Import the primary function from our new unified "LLM Brain"
-from two import get_recommendation
+from agent import get_recommendation
 
 # --- Constants ---
 STORES_FILE = 'data/stores.json'
@@ -52,7 +52,7 @@ def converse_with_agent():
     print("--- Pipeline Start ---")
     print(f"User Request: '{raw_request}', Preference: '{preference}'")
     
-    # Call the LLM Brain (two.py), which now handles all logic internally
+    # Call the LLM Brain (agent.py), which now handles all logic internally
     final_recommendation = get_recommendation(raw_request, CONVERSATION_HISTORY, STORES_DB, preference)
     
     # Update history

@@ -1,4 +1,4 @@
-# two.py - Logic for Agent 2: The Recommender (LIVE & CONTEXT-AWARE)
+#agent.py - Logic for Agent 1: The Recommender (LIVE & CONTEXT-AWARE)
 
 import json
 import google.generativeai as genai
