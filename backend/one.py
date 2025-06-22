@@ -1,6 +1,5 @@
 # one.py - Logic for Agent 1: The Analyst (LIVE & TESTABLE)
 
-import os
 import json
 import google.generativeai as genai
 

@@ -1,6 +1,5 @@
 # two.py - Logic for Agent 2: The Recommender (LIVE & CONTEXT-AWARE)
 
-import os
 import json
 import google.generativeai as genai
 
