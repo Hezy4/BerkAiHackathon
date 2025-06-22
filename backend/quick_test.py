@@ -7,15 +7,15 @@ user_request = input("\nwhat ingredients do you want? (press enter to continue)\
 
 agentOne = talk(AGENT1_ID, user_request)
 agentOneProcessed = ("AGENT ONE HERE: Heres the data you need to provide the user with the help they need. do not reply to me, reply to them. Store Info (JSON Format): \n(START OF FILE)\n" + storeInfo + "\n(END OF FILE)\nthe ingredients needed (JSON Format): " + agentOne + ". NOW: return the recommendation. ")
-agentTwo = talk(AGENT2_ID, agentOneProcessed)
+output = talk(AGENT2_ID, agentOneProcessed)
 #print reply from agent 2
-print(agentTwo)
+print(output)
 
 #leave the chat open for follow up questions 
 while True:
     userReply = input("\nAny questions?\n\n")
-    agentTwo = talk(AGENT2_ID, userReply)
-    print(agentTwo)
+    output = talk(AGENT2_ID, userReply)
+    print(output)
     if userReply == "break" or userReply=="quit":
 
         break
