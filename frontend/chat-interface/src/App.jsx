@@ -33,6 +33,7 @@ const MAP_CONFIG = {
 };
 
 function App() {
+  // --- UNCHANGED MAP STATE ---
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
   const [chatWidth, setChatWidth] = useState(350);
@@ -40,13 +41,23 @@ function App() {
   const [groceryStores, setGroceryStores] = useState([]);
   const [showMarkers, setShowMarkers] = useState(true);
   const [locationError, setLocationError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isMapLoading, setIsMapLoading] = useState(true);
   const mapRef = useRef(null);
   const chatRef = useRef(null);
   const startX = useRef(0);
   const startWidth = useRef(0);
   
-  // Fetch nearby grocery stores using Overpass API
+  // --- CHAT-SPECIFIC STATE ---
+  const [messages, setMessages] = useState([
+    { sender: 'agent', text: "Hello! How can I help you plan your shopping today?" }
+  ]);
+  const [inputValue, setInputValue] = useState('');
+  const [preference, setPreference] = useState('balanced');
+  const [isChatLoading, setIsChatLoading] = useState(false);
+  const messagesEndRef = useRef(null);
+
+
+  // --- UNCHANGED MAP FUNCTIONS ---
   const fetchNearbyGroceryStores = async (lat, lon, radius = 2000) => {
     try {
       const overpassUrl = 'https://overpass-api.de/api/interpreter';
@@ -56,7 +67,7 @@ function App() {
           node["shop"="supermarket"](around:${radius},${lat},${lon});
           node["shop"="grocery"](around:${radius},${lat},${lon});
           way["shop"="supermarket"](around:${radius},${lat},${lon});
-          way["shop"="grocery"](around:${lat},${lon});
+          way["shop"="grocery"](around:${radius},${lat},${lon});
           relation["shop"="supermarket"](around:${radius},${lat},${lon});
           relation["shop"="grocery"](around:${radius},${lat},${lon});
         );
@@ -69,7 +80,6 @@ function App() {
       const data = await response.json();
       console.log('Raw API response:', data);
       
-      // Process the data to get unique stores with names and coordinates
       const stores = [];
       const seen = new Set();
       
@@ -86,20 +96,18 @@ function App() {
             lat = element.lat;
             lon = element.lon;
           } else if (element.center) {
-            // For ways and relations, use the center point
             lat = element.center.lat;
             lon = element.center.lon;
           } else if (element.nodes && element.nodes.length > 0) {
-            // Fallback: use the first node's coordinates
             const firstNode = data.elements.find(el => el.type === 'node' && el.id === element.nodes[0]);
             if (firstNode) {
               lat = firstNode.lat;
               lon = firstNode.lon;
             } else {
-              return; // Skip if we can't get coordinates
+              return; 
             }
           } else {
-            return; // Skip if we can't get coordinates
+            return;
           }
           
           const storeKey = `${element.tags.name}-${lat}-${lon}`;
@@ -124,136 +132,21 @@ function App() {
     }
   };
   
-  // Sample grocery stores data for demonstration
   const sampleGroceryStores = [
-    {
-      id: 'sample-1',
-      name: 'Whole Foods Market',
-      lat: 37.9489,
-      lon: -122.5472,
-      tags: {
-        'addr:street': '720 Sir Francis Drake Blvd',
-        'addr:city': 'Kentfield',
-        'addr:postcode': '94904',
-        phone: '(415) 925-9426',
-        website: 'https://www.wholefoodsmarket.com',
-        opening_hours: '8:00 AM - 10:00 PM',
-        organic: 'Yes',
-        rating: '4.5/5',
-        description: 'High-end grocery chain with a focus on natural & organic food items, plus household goods.'
-      }
-    },
-    {
-      id: 'sample-2',
-      name: 'Woodlands Market',
-      lat: 37.9465,
-      lon: -122.5421,
-      tags: {
-        'addr:street': '720 College Ave',
-        'addr:city': 'Kentfield',
-        'addr:postcode': '94904',
-        phone: '(415) 924-1520',
-        website: 'https://www.woodlandsmarket.com',
-        opening_hours: '7:00 AM - 9:00 PM',
-        organic: 'Yes',
-        rating: '4.7/5',
-        description: 'Local market offering gourmet foods, organic produce & specialty items in a warm setting.'
-      }
-    },
-    {
-      id: 'sample-3',
-      name: 'Trader Joe\'s',
-      lat: 37.9542,
-      lon: -122.5353,
-      tags: {
-        'addr:street': '1599 S Novato Blvd',
-        'addr:city': 'Novato',
-        'addr:postcode': '94947',
-        phone: '(415) 897-1125',
-        website: 'https://www.traderjoes.com',
-        opening_hours: '8:00 AM - 9:00 PM',
-        organic: 'Partial',
-        rating: '4.6/5',
-        description: 'Grocery chain with a variety of signature items, plus produce, dairy & more.'
-      }
-    },
-    {
-      id: 'sample-4',
-      name: 'Safeway',
-      lat: 37.9520,
-      lon: -122.5400,
-      tags: {
-        'addr:street': '700 E Blithedale Ave',
-        'addr:city': 'Mill Valley',
-        'addr:postcode': '94941',
-        phone: '(415) 388-7252',
-        website: 'https://www.safeway.com',
-        opening_hours: '6:00 AM - 12:00 AM',
-        organic: 'Partial',
-        rating: '4.2/5',
-        description: 'Grocery store chain with a wide selection of food & household items, plus a pharmacy.'
-      }
-    },
-    {
-      id: 'sample-5',
-      name: 'Mollie Stone\'s Market',
-      lat: 37.9440,
-      lon: -122.5480,
-      tags: {
-        'addr:street': '414 Miller Ave',
-        'addr:city': 'Mill Valley',
-        'addr:postcode': '94941',
-        phone: '(415) 388-3175',
-        website: 'https://www.molliestones.com',
-        opening_hours: '7:00 AM - 9:00 PM',
-        organic: 'Yes',
-        rating: '4.4/5',
-        description: 'Upscale grocery store offering organic produce, a deli counter & a selection of wine & beer.'
-      }
-    },
-    {
-      id: 'sample-6',
-      name: 'Good Earth Natural Foods',
-      lat: 37.9580,
-      lon: -122.5450,
-      tags: {
-        'addr:street': '720 Center Blvd',
-        'addr:city': 'Fairfax',
-        'addr:postcode': '94930',
-        phone: '(415) 453-0120',
-        website: 'https://goodearthnaturalfoods.com',
-        opening_hours: '7:00 AM - 9:00 PM',
-        organic: 'Yes',
-        rating: '4.6/5',
-        description: 'Longtime natural foods market with organic produce, bulk foods, vitamins & a juice bar.'
-      }
-    },
-    {
-      id: 'sample-7',
-      name: 'United Markets',
-      lat: 37.9490,
-      lon: -122.5300,
-      tags: {
-        'addr:street': '555 E Blithedale Ave',
-        'addr:city': 'Mill Valley',
-        'addr:postcode': '94941',
-        phone: '(415) 381-1500',
-        website: 'https://www.unitedmarketsmarin.com',
-        opening_hours: '6:00 AM - 11:00 PM',
-        organic: 'Partial',
-        rating: '4.3/5',
-        description: 'Local grocery chain with a wide selection of natural & organic foods, plus a deli & bakery.'
-      }
-    }
+    { id: 'sample-1', name: 'Whole Foods Market', lat: 37.9489, lon: -122.5472, tags: { 'addr:street': '720 Sir Francis Drake Blvd', 'addr:city': 'Kentfield', 'addr:postcode': '94904', phone: '(415) 925-9426', website: 'https://www.wholefoodsmarket.com', opening_hours: '8:00 AM - 10:00 PM', organic: 'Yes', rating: '4.5/5', description: 'High-end grocery chain with a focus on natural & organic food items, plus household goods.' }},
+    { id: 'sample-2', name: 'Woodlands Market', lat: 37.9465, lon: -122.5421, tags: { 'addr:street': '720 College Ave', 'addr:city': 'Kentfield', 'addr:postcode': '94904', phone: '(415) 924-1520', website: 'https://www.woodlandsmarket.com', opening_hours: '7:00 AM - 9:00 PM', organic: 'Yes', rating: '4.7/5', description: 'Local market offering gourmet foods, organic produce & specialty items in a warm setting.' }},
+    { id: 'sample-3', name: 'Trader Joe\'s', lat: 37.9542, lon: -122.5353, tags: { 'addr:street': '1599 S Novato Blvd', 'addr:city': 'Novato', 'addr:postcode': '94947', phone: '(415) 897-1125', website: 'https://www.traderjoes.com', opening_hours: '8:00 AM - 9:00 PM', organic: 'Partial', rating: '4.6/5', description: 'Grocery chain with a variety of signature items, plus produce, dairy & more.' }},
+    { id: 'sample-4', name: 'Safeway', lat: 37.9520, lon: -122.5400, tags: { 'addr:street': '700 E Blithedale Ave', 'addr:city': 'Mill Valley', 'addr:postcode': '94941', phone: '(415) 388-7252', website: 'https://www.safeway.com', opening_hours: '6:00 AM - 12:00 AM', organic: 'Partial', rating: '4.2/5', description: 'Grocery store chain with a wide selection of food & household items, plus a pharmacy.' }},
+    { id: 'sample-5', name: 'Mollie Stone\'s Market', lat: 37.9440, lon: -122.5480, tags: { 'addr:street': '414 Miller Ave', 'addr:city': 'Mill Valley', 'addr:postcode': '94941', phone: '(415) 388-3175', website: 'https://www.molliestones.com', opening_hours: '7:00 AM - 9:00 PM', organic: 'Yes', rating: '4.4/5', description: 'Upscale grocery store offering organic produce, a deli counter & a selection of wine & beer.' }},
+    { id: 'sample-6', name: 'Good Earth Natural Foods', lat: 37.9580, lon: -122.5450, tags: { 'addr:street': '720 Center Blvd', 'addr:city': 'Fairfax', 'addr:postcode': '94930', phone: '(415) 453-0120', website: 'https://goodearthnaturalfoods.com', opening_hours: '7:00 AM - 9:00 PM', organic: 'Yes', rating: '4.6/5', description: 'Longtime natural foods market with organic produce, bulk foods, vitamins & a juice bar.' }},
+    { id: 'sample-7', name: 'United Markets', lat: 37.9490, lon: -122.5300, tags: { 'addr:street': '555 E Blithedale Ave', 'addr:city': 'Mill Valley', 'addr:postcode': '94941', phone: '(415) 381-1500', website: 'https://www.unitedmarketsmarin.com', opening_hours: '6:00 AM - 11:00 PM', organic: 'Partial', rating: '4.3/5', description: 'Local grocery chain with a wide selection of natural & organic foods, plus a deli & bakery.' }},
   ];
 
-  // Set the address location and fetch nearby grocery stores
   useEffect(() => {
     const address = '835 College Ave, Kentfield, CA 94904';
     const fetchData = async () => {
-      setIsLoading(true);
+      setIsMapLoading(true);
       try {
-        // Get coordinates for the address
         const geocodeResponse = await fetch(
           `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`
         );
@@ -264,11 +157,9 @@ function App() {
           const coordinates = [parseFloat(lat), parseFloat(lon)];
           setUserLocation(coordinates);
           
-          // Fetch nearby grocery stores
           const stores = await fetchNearbyGroceryStores(lat, lon);
           console.log('Found grocery stores:', stores);
           
-          // Use sample data if no stores found or API fails
           const storesToShow = stores.length > 0 ? stores : sampleGroceryStores;
           setGroceryStores(storesToShow);
           
@@ -287,14 +178,12 @@ function App() {
         setLocationError('Unable to load location data');
         setUserLocation(MAP_CONFIG.defaultCoords);
         
-        // Try to fetch stores with default coordinates
         const stores = await fetchNearbyGroceryStores(
           MAP_CONFIG.defaultCoords[0], 
           MAP_CONFIG.defaultCoords[1]
         );
         console.log('Using default coordinates. Found stores:', stores);
         
-        // Use sample data if no stores found or API fails
         const storesToShow = stores.length > 0 ? stores : sampleGroceryStores;
         setGroceryStores(storesToShow);
         
@@ -306,14 +195,13 @@ function App() {
           mapRef.current.flyTo(MAP_CONFIG.defaultCoords, MAP_CONFIG.defaultZoom);
         }
       } finally {
-        setIsLoading(false);
+        setIsMapLoading(false);
       }
     };
 
     fetchData();
   }, []);
   
-  // Toggle theme and save preference
   const toggleTheme = () => {
     const newMode = !isDarkMode;
     setIsDarkMode(newMode);
@@ -321,7 +209,6 @@ function App() {
     localStorage.setItem('theme', newMode ? 'dark' : 'light');
   };
 
-  // Handle mouse down on resizer
   const startResizing = useCallback((e) => {
     e.preventDefault();
     setIsResizing(true);
@@ -329,28 +216,23 @@ function App() {
     startWidth.current = chatRef.current.getBoundingClientRect().width;
   }, []);
 
-  // Handle mouse move during resize
   const resize = useCallback((e) => {
     if (!isResizing) return;
     
     const currentWidth = startWidth.current + e.clientX - startX.current;
-    const minWidth = 280; // matches --min-chat-width in CSS
-    const maxWidth = 500;  // matches --max-chat-width in CSS
+    const minWidth = 280;
+    const maxWidth = 500;
     
-    // Apply constraints
     const newWidth = Math.min(Math.max(currentWidth, minWidth), maxWidth);
     
-    // Update the width
     document.documentElement.style.setProperty('--chat-width', `${newWidth}px`);
     setChatWidth(newWidth);
   }, [isResizing]);
 
-  // Stop resizing
   const stopResizing = useCallback(() => {
     setIsResizing(false);
   }, []);
 
-  // Add/remove event listeners for resizing
   useEffect(() => {
     window.addEventListener('mousemove', resize);
     window.addEventListener('mouseup', stopResizing);
@@ -360,7 +242,6 @@ function App() {
     };
   }, [resize, stopResizing]);
   
-  // Check for saved theme preference or system preference on mount
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -370,38 +251,53 @@ function App() {
       document.documentElement.setAttribute('data-theme', 'dark');
     }
   }, []);
-  const [messages, setMessages] = useState([
-    { text: "Hello! I'm your chatbot. How can I help you today?", sender: 'bot' }
-  ]);
-  const [inputValue, setInputValue] = useState('');
-  const messagesEndRef = useRef(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  
+  // --- MODIFIED CHAT FUNCTIONS ---
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isChatLoading]);
 
-  const handleSendMessage = (e) => {
+  const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (!inputValue.trim()) return;
+    const userMessage = inputValue.trim();
 
-    // Add user message
-    const userMessage = { text: inputValue, sender: 'user' };
-    setMessages(prev => [...prev, userMessage]);
+    if (!userMessage || isChatLoading) return;
+
+    // Add user message and set loading state
+    setMessages(prev => [...prev, { sender: 'user', text: userMessage }]);
+    setIsChatLoading(true);
     setInputValue('');
 
-    // Simulate bot response
-    setTimeout(() => {
-      const botMessage = { 
-        text: `I received: "${inputValue}"`,
-        sender: 'bot' 
-      };
-      setMessages(prev => [...prev, botMessage]);
-    }, 1000);
+    try {
+      // --- BACKEND INTEGRATION ---
+      const response = await fetch('http://127.0.0.1:5001/api/converse', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          request: userMessage,
+          preference: preference
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: 'An unknown server error occurred.' }));
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      // Add agent response
+      setMessages(prev => [...prev, { sender: 'agent', text: data.recommendation }]);
+
+    } catch (error) {
+      console.error("Failed to fetch from backend:", error);
+      setMessages(prev => [...prev, { sender: 'agent', text: `I'm sorry, I seem to be having a technical issue. Please try again.` }]);
+    } finally {
+      setIsChatLoading(false);
+    }
   };
+
 
   return (
     <div className={`app-container ${isDarkMode ? 'dark' : ''}`}>
@@ -422,6 +318,25 @@ function App() {
               {isDarkMode ? <FiSun /> : <FiMoon />}
             </button>
           </header>
+
+           {/* Preference selection for the chatbot */}
+          <div className="preference-container">
+            <fieldset>
+              <legend>Recommendation Preference</legend>
+              <div>
+                <input type="radio" id="price" name="preference" value="price" checked={preference === 'price'} onChange={(e) => setPreference(e.target.value)} />
+                <label htmlFor="price">Price</label>
+              </div>
+              <div>
+                <input type="radio" id="balanced" name="preference" value="balanced" checked={preference === 'balanced'} onChange={(e) => setPreference(e.target.value)} />
+                <label htmlFor="balanced">Balanced</label>
+              </div>
+              <div>
+                <input type="radio" id="quality" name="preference" value="quality" checked={preference === 'quality'} onChange={(e) => setPreference(e.target.value)} />
+                <label htmlFor="quality">Quality</label>
+              </div>
+            </fieldset>
+          </div>
         
           <div className="chat-container">
             <div className="messages">
@@ -433,6 +348,13 @@ function App() {
                   {message.text}
                 </div>
               ))}
+              {isChatLoading && (
+                <div className="message agent loading">
+                  <div className="loading-dots">
+                    <span></span><span></span><span></span>
+                  </div>
+                </div>
+              )}
               <div ref={messagesEndRef} />
             </div>
             
@@ -443,8 +365,9 @@ function App() {
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Type your message..."
                 className="message-input"
+                disabled={isChatLoading}
               />
-              <button type="submit" className="send-button">
+              <button type="submit" className="send-button" disabled={isChatLoading}>
                 <FiMessageSquare />
               </button>
             </form>
@@ -458,7 +381,7 @@ function App() {
       
       {/* Map Area */}
       <div className={`map-container ${isDarkMode ? 'dark' : ''}`}>
-        {!isLoading && userLocation ? (
+        {!isMapLoading && userLocation ? (
           <MapContainer 
             center={MAP_CONFIG.defaultCoords}
             zoom={MAP_CONFIG.defaultZoom}
@@ -468,7 +391,6 @@ function App() {
             style={{ height: '100%', width: '100%' }}
             whenCreated={(map) => {
               mapRef.current = map;
-              // Set up map bounds
               const bounds = L.latLngBounds(
                 L.latLng(MAP_CONFIG.bounds.southWest[0], MAP_CONFIG.bounds.southWest[1]),
                 L.latLng(MAP_CONFIG.bounds.northEast[0], MAP_CONFIG.bounds.northEast[1])
@@ -491,9 +413,7 @@ function App() {
               </Popup>
             </Marker>
             
-            {/* Grocery Store Markers */}
             {showMarkers && groceryStores.map((store, index) => {
-              // Use red marker for all grocery stores
               const redMarker = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png';
               
               return (
@@ -559,7 +479,6 @@ function App() {
               );
             })}
             
-            {/* Map Controls */}
             <div className="map-controls">
               <div className="map-control-panel">
                 <h4>Map Controls</h4>
