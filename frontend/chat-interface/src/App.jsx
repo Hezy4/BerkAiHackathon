@@ -402,10 +402,21 @@ function App() {
                         <span className="category-tag">{store.category}</span>
                       </div>
                       
-                      <div className="store-description-container">
-                        <div className="store-description-icon">💬</div>
-                        <p className="store-description">{store.tags.description}</p>
-                      </div>
+                      {store.tags && store.tags.description ? (
+                        <div className="store-description-container">
+                          <div className="store-description-icon">💬</div>
+                          <p className="store-description">
+                            {store.tags.description}
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="store-description-container">
+                          <div className="store-description-icon">ℹ️</div>
+                          <p className="store-description">
+                            {store.name} is a {store.category} located at {store.location}
+                          </p>
+                        </div>
+                      )}
                       
                       <div className="store-details">
                         <div className="store-address">

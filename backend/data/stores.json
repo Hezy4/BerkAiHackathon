@@ -284,7 +284,9 @@
         "inStock": true
       }
     ],
-    "rating": 4.7
+    "tags": {
+      "description": "SuperMart Grocers provides a one-stop shopping experience for all your grocery needs. With an extensive selection of fresh produce, meats, and dairy products, you'll find everything you need for a healthy and balanced diet. Additionally, our knowledgeable staff is always happy to assist with specialty items and offer cooking tips to make mealtime a breeze."
+    }
   },
   {
     "id": "store-002",
@@ -559,7 +561,9 @@
         "inStock": true
       }
     ],
-    "rating": 4.3
+    "tags": {
+      "description": "Budget Bites is a haven for smart shoppers, offering a wide range of affordable staples and gourmet treats. From artisanal cheeses to fresh produce, our aisles are stocked with the best of the best at unbeatable prices. Whether you're stocking up for the week or treating yourself to a indulgent dessert, Budget Bites has everything you need to make mealtime a delight."
+    }
   },
   {
     "id": "store-003",
@@ -828,7 +832,9 @@
         "inStock": true
       }
     ],
-    "rating": 3.9
+    "tags": {
+      "description": "Organic Emporium is a haven for health-conscious shoppers, offering a curated selection of fresh produce, artisanal cheeses, and small-batch grains. Our knowledgeable staff is passionate about helping customers make informed choices, from locally sourced meats to specialty supplements. Whether you're a busy professional or a mindful consumer, our emporium is the perfect destination for nourishing your body and soul."
+    }
   },
   {
     "id": "store-004",
@@ -1145,7 +1151,9 @@
         "inStock": true
       }
     ],
-    "rating": 3.2
+    "tags": {
+      "description": "Tech Galaxy is a premier destination for all your electronics needs, boasting an extensive selection of gadgets and gizmos that will cater to every tech enthusiast's delight. From the latest smartphones to cutting-edge gaming consoles, our shelves are stocked with the hottest products on the market. Our expert staff is always on hand to provide personalized advice and guidance to help you find exactly what you're looking for."
+    }
   },
   {
     "id": "store-005",
@@ -1336,7 +1344,9 @@
         "inStock": true
       }
     ],
-    "rating": 3.2
+    "tags": {
+      "description": "DIY Depot is your one-stop shop for all your home improvement needs. With a vast selection of top-notch tools, hardware, and materials, you'll find everything you need to turn your DIY dreams into reality. From painting supplies to plumbing fixtures, our knowledgeable staff is always happy to offer expert advice and guidance to ensure your project turns out just right."
+    }
   },
   {
     "id": "store-006",
@@ -1371,7 +1381,9 @@
         "inStock": true
       }
     ],
-    "rating": 3.9
+    "tags": {
+      "description": "B Street 76 is your go-to destination for all your fuel and convenience needs. Our expertly trained staff is always happy to help with any questions or concerns you may have, whether you're looking for top-tier gasoline or a fresh cup of coffee to start your day. With a wide range of products and services under one roof, you'll find everything you need to get back on the road in no time."
+    }
   },
   {
     "id": "store-007",
@@ -1406,7 +1418,9 @@
         "inStock": true
       }
     ],
-    "rating": 4.3
+    "tags": {
+      "description": "E. Francisco Chevron is your one-stop shop for all your fuel and convenience needs. Our expertly trained staff is always ready to help with quick and efficient service, whether you're filling up on gas or grabbing a snack. Plus, our convenient location and extended hours make it easy to fit a stop into your busy schedule."
+    }
   },
   {
     "id": "store-008",
@@ -1441,6 +1455,8 @@
         "inStock": true
       }
     ],
-    "rating": 3.2
+    "tags": {
+      "description": "Bellam ARCO is a premier gas station that provides top-notch fuel and refreshing amenities for travelers. Our expertly curated selection of snacks and drinks keeps you energized on the go, while our modern facilities ensure a comfortable stop. From diesel to premium gasoline, we've got you covered with a range of options to suit your needs."
+    }
   }
 ]
