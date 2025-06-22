@@ -61,7 +61,7 @@ def converse_with_agent():
     
     print("--- Pipeline End: In-memory history updated. ---")
 
-    return jsonify({"recommendation": final_recommendation})
+    return jsonify({"response": final_recommendation})
 
 @app.route('/api/memory/clear', methods=['POST'])
 def clear_memory():
