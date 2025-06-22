@@ -1,25 +1,21 @@
-# app.py - The Central Controller (In-Memory Session Version)
+# app.py - The Orchestrator (Unified Agent & Restored Stores API)
 
+import os
 import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-# Import the logic from our two agent modules
-from one import analyze_and_find_stores
-from two import generate_recommendation
+# Import the primary function from our new unified "LLM Brain"
+from two import get_recommendation
 
 # --- Constants ---
 STORES_FILE = 'data/stores.json'
 
 # --- Flask App Initialization ---
 app = Flask(__name__)
-CORS(app, resources={
-    r"/api/*": {"origins": "*"}
-})
+CORS(app)
 
 # --- In-Memory Session Management ---
-# The conversation history is now stored in a simple global variable.
-# It will be reset every time the server application is restarted.
 CONVERSATION_HISTORY = []
 
 # --- Data Loading ---
@@ -31,19 +27,20 @@ except FileNotFoundError:
     print(f"FATAL ERROR: {STORES_FILE} not found. Please ensure it's in the same directory as app.py.")
     STORES_DB = []
 
-# --- API Endpoints ---
+
+# --- API Routes ---
+
+# This route is included to serve store data for the map on the frontend.
 @app.route('/api/stores', methods=['GET'])
 def get_stores():
-    """Endpoint to get all grocery stores"""
-    try:
-        return jsonify(STORES_DB)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    """An endpoint to serve the store data to the frontend."""
+    return jsonify(STORES_DB)
+
 
 @app.route('/api/converse', methods=['POST'])
-def converse_with_agents():
-    """A single endpoint that runs the full two-agent pipeline using in-memory context."""
-    global CONVERSATION_HISTORY # Declare that we intend to modify the global variable
+def converse_with_agent():
+    """A single endpoint that calls the primary agent brain."""
+    global CONVERSATION_HISTORY
 
     user_data = request.json
     raw_request = user_data.get('request')
@@ -55,32 +52,20 @@ def converse_with_agents():
     print("--- Pipeline Start ---")
     print(f"User Request: '{raw_request}', Preference: '{preference}'")
     
-    # Step 1: Call Agent 1, passing the current in-memory history
-    agent1_output = analyze_and_find_stores(raw_request, CONVERSATION_HISTORY, STORES_DB)
+    # Call the LLM Brain (two.py), which now handles all logic internally
+    final_recommendation = get_recommendation(raw_request, CONVERSATION_HISTORY, STORES_DB, preference)
     
-    if agent1_output.get("error"):
-        return jsonify(agent1_output), 400
-    
-    # Update history in memory AFTER Agent 1 succeeds
+    # Update history
     CONVERSATION_HISTORY.append({"role": "user", "content": raw_request})
-
-    # Step 2: Call Agent 2 with the updated history
-    final_recommendation = generate_recommendation(agent1_output, preference, CONVERSATION_HISTORY)
-    
-    # Add the final response to the in-memory history
     CONVERSATION_HISTORY.append({"role": "model", "content": final_recommendation})
     
     print("--- Pipeline End: In-memory history updated. ---")
-    
-    # Return the final response to the frontend
-    return jsonify({
-        "response": final_recommendation,
-        "status": "success"
-    })
+
+    return jsonify({"recommendation": final_recommendation})
 
 @app.route('/api/memory/clear', methods=['POST'])
 def clear_memory():
-    """An endpoint to wipe the in-memory conversation history for the current session."""
+    """An endpoint to wipe the in-memory conversation history."""
     global CONVERSATION_HISTORY
     CONVERSATION_HISTORY = []
     print("In-memory history has been cleared by user request.")

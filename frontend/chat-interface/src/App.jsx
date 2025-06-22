@@ -254,7 +254,7 @@ function App() {
       
       // Add bot response
       const botMessage = { 
-        text: data.response || "I'm not sure how to respond to that. Could you rephrase?",
+        text: data.response,
         sender: 'bot' 
       };
       setMessages(prev => [...prev, botMessage]);

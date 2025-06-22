@@ -1,127 +1,41 @@
-# one.py - Logic for Agent 1: The Analyst (LIVE & TESTABLE)
+# one.py - The Data Cruncher (No LLM)
 
-import json
-import google.generativeai as genai
-
-# --- Configuration ---
-# IMPORTANT: Replace "YOUR_API_KEY_HERE" with the actual key you provided.
-# For better security, load this from an environment variable in a real project.
-API_KEY = "AIzaSyDtVqk3C3ApjL2l0g7JKhH3HbUL5mAtt80" 
-genai.configure(api_key=API_KEY)
-
-# Initialize the generative model
-# We use gemini-1.5-flash for speed and efficiency, perfect for a hackathon.
-
-llm = genai.GenerativeModel('gemini-1.5-flash')
-
-def _find_semantic_matches_in_store(items_needed: list, store: dict) -> dict:
+def find_stores_with_items(items_needed: list, category: str, stores_db: list) -> list:
     """
-    Helper function that uses an LLM to semantically match needed items
-    with a specific store's available inventory.
+    A simple, non-AI function to find stores that have all the required items.
+    It performs a case-insensitive match against the store's inventory.
     """
-    print(f"[Agent 1.5: Running semantic match for '{store['name']}'...]")
-    store_inventory_names = [item['itemName'] for item in store['inventory'] if item['inStock']]
-
-    prompt = f"""
-    You are a precise inventory matching expert. Your only task is to determine if a user's shopping list can be **completely** fulfilled by a specific store's inventory.
-
-    **User's Shopping List:**
-    {items_needed}
-
-    **Store's Available Inventory:**
-    {store_inventory_names}
-
-    **Instructions:**
-    1. For each item in the "User's Shopping List", find the single best-matching item from the "Store's Available Inventory".
-    2. The match should be conceptual. For example, if the user wants "mid-range graphics card", and the inventory has "Nvidia GeForce RTX 5070", that is a valid match.
-    3. **If you cannot find a reasonable match for even ONE item, the entire match fails.**
-
-    **Output Format (Strict):**
-    Respond with ONLY a valid JSON object with a single key "matched_items".
-    - If ALL items are successfully matched, "matched_items" MUST be a list of the *exact* item names from the store's inventory.
-    - If ANY item cannot be matched, "matched_items" MUST be `null`.
-    """
-    try:
-        response = llm.generate_content(prompt)
-        clean_response_text = response.text.strip().replace("```json", "").replace("```", "").strip()
-        llm_output = json.loads(clean_response_text)
-        return llm_output
-    except Exception as e:
-        print(f"[Agent 1.5: FATAL ERROR parsing match response. Error: {e}\nRaw Text: {response.text}]")
-        return {"matched_items": None}
-
-
-def analyze_and_find_stores(raw_request: str, conversation_history: list, stores_db: list) -> dict:
-    """
-    Core logic for Agent 1. Now with a two-stage process for semantic matching.
-    """
-    print("\n[Agent 1: Context-aware analysis initiated...]")
-
-    if not raw_request:
-        return {"error": "No request text provided."}
-
-    full_conversation_for_prompt = conversation_history + [{"role": "user", "content": raw_request}]
-    formatted_history = "\n".join([f"{msg['role'].capitalize()}: {msg['content']}" for msg in full_conversation_for_prompt])
+    print(f"[Agent 1 - Data Cruncher: Searching for {len(items_needed)} items in category '{category}']")
     
-    prompt_stage1 = f"""
-    You are an expert shopping list analyst. Your task is to analyze the conversation and generate a definitive shopping list based on the user's most recent request.
+    relevant_stores = [store for store in stores_db if store.get('category') == category]
+    qualified_options = []
 
-    **Full Conversation Transcript:**
-    {formatted_history}
-
-    **Your Reasoning Process:**
-    1.  **Analyze Intent**: Determine if the "Latest User Request" is a follow-up/modification to the immediately preceding topic OR if it is a **completely new topic**.
-    2.  **Handle Topic/Tier Changes**: If the latest request is a new topic or a different version of the same topic (e.g., "less expensive PC"), **IGNORE** previous lists and generate a **NEW** list.
-    3.  **Handle Q&A**: If the request is a simple question about the previous turn (e.g., "what are the parts?"), **re-affirm the previous list**, and ONLY EDIT the list, by swapping items that fit the users query better. 
-
-    **Your Task:**
-    Based on your reasoning, perform two final actions:
-    1.  **Extract Final Items**: Create the single, definitive list of products the user needs now. For conceptual requests (e.g., "budget PC"), generate a reasonable list of specific components.
-    2.  **Classify Final Category**: Determine the single, most appropriate shopping category for the final list from this list: {list(set(s['category'] for s in stores_db))}.
-
-    **Examples**
-    1. when ask to search for computer parts, ingredients, etc, make sure to refrence the internet to make sure the product youre recommending is the the right product in the right catagory. 
-       if the user asks for a CPu for example, look for products from electronics stores that are CPUs (Ryzen, Intel i-series, etc)
-    2. when the user switches subjetcs, as in asks a question where the last result is of a different catagory, RECOGNIZE that the user is requesting a NEW list. DO NOT get stuck. 
-    **Output Format:**
-    Respond with ONLY a valid JSON object with "items" and "category" keys.
-    """
-    print("[Agent 1: Sending Stage 1 prompt to Gemini...]")
-    try:
-        response_stage1 = llm.generate_content(prompt_stage1)
-        clean_response_text = response_stage1.text.strip().replace("```json", "").replace("```", "").strip()
-        llm_output = json.loads(clean_response_text)
-    except Exception as e:
-        print(f"[Agent 1: FATAL ERROR - Could not parse Stage 1 response. Error: {e}\nRaw Text: {response_stage1.text}]")
-        return {"error": "Failed to get a valid analysis from the AI model."}
-
-    items_needed = llm_output.get("items", [])
-    store_category = llm_output.get("category")
-    print(f"[Agent 1: Stage 1 complete. Identified: {items_needed}, Category: {store_category}]")
-    
-    if not items_needed or not store_category:
-        return {"shoppingOptions": []}
-
-    relevant_stores = [store for store in stores_db if store.get('category') == store_category]
-    shopping_options = []
+    print(f"[Agent 1 - Data Cruncher: Found {len(relevant_stores)} relevant store(s).]")
 
     for store in relevant_stores:
-        match_result = _find_semantic_matches_in_store(items_needed, store)
+        # Create a quick-access map of the store's inventory for efficient lookups
+        inventory_map = {item['itemName'].lower(): item for item in store['inventory'] if item['inStock']}
         
-        if match_result and match_result.get("matched_items"):
-            matched_item_names = match_result["matched_items"]
-            
-            option = {
-                "storeInfo": {k: v for k, v in store.items() if k != 'inventory'},
-                "matchedItemsDetails": [
-                    item for item in store['inventory'] if item['itemName'] in matched_item_names
-                ]
-            }
-            shopping_options.append(option)
-            print(f"[Agent 1.5: SUCCESS! Found a valid shopping option at '{store['name']}'.]")
-        else:
-            print(f"[Agent 1.5: FAILED. '{store['name']}' does not have all required items.]")
+        all_items_found = True
+        matched_item_details = []
 
-    print(f"\n[Agent 1: Stage 2 complete. Found {len(shopping_options)} viable shopping options.]")
-    
-    return {"shoppingOptions": shopping_options}
+        for needed_item in items_needed:
+            match = inventory_map.get(needed_item.lower())
+            if match:
+                matched_item_details.append(match)
+            else:
+                # If even one item isn't found, this store is not a valid option.
+                print(f"Store '{store['name']}' is missing item: '{needed_item}'")
+                all_items_found = False
+                break
+        
+        if all_items_found:
+            # If all items were found, package this store and its matching items as a valid option
+            option = {
+                "storeInfo": {k: v for k, v in store.items() if k != 'inventory'}, 
+                "matchedItemsDetails": matched_item_details
+            }
+            qualified_options.append(option)
+            print(f"[Agent 1: SUCCESS! Found a complete match at '{store['name']}'.]")
+            
+    return qualified_options
