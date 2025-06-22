@@ -3,7 +3,9 @@
     "id": "store-001",
     "name": "SuperMart Grocers",
     "category": "Groceries",
-    "location": "12 Bolinas Ave, San Anselmo, CA, 94960.",
+    "lat": 38.0064,
+    "long": -122.5463,
+    "location": "950 Las Gallinas Ave, San Rafael, CA 94903",
     "inventory": [
       { "itemName": "flour", "price": 3.50, "qualityScore": 7, "inStock": true },
       { "itemName": "sugar", "price": 2.50, "qualityScore": 8, "inStock": true },
@@ -40,14 +42,26 @@
       { "itemName": "tea", "price": 4.00, "qualityScore": 7, "inStock": true },
       { "itemName": "yogurt", "price": 1.20, "qualityScore": 8, "inStock": true },
       { "itemName": "frozen pizza", "price": 6.50, "qualityScore": 5, "inStock": true },
-      { "itemName": "ice cream", "price": 5.50, "qualityScore": 7, "inStock": true }
+      { "itemName": "ice cream", "price": 5.50, "qualityScore": 7, "inStock": true },
+      { "itemName": "Rotisserie Chicken", "price": 9.99, "qualityScore": 8, "inStock": true },
+      { "itemName": "Haagen-Dazs Ice Cream", "price": 6.50, "qualityScore": 9, "inStock": true },
+      { "itemName": "Starbucks Coffee Beans", "price": 14.99, "qualityScore": 8, "inStock": true },
+      { "itemName": "Avocados", "price": 2.50, "qualityScore": 7, "inStock": true },
+      { "itemName": "Sourdough Bread Loaf", "price": 5.00, "qualityScore": 7, "inStock": true },
+      { "itemName": "Tide Laundry Detergent", "price": 12.99, "qualityScore": 9, "inStock": true },
+      { "itemName": "Colgate Toothpaste", "price": 3.99, "qualityScore": 7, "inStock": true },
+      { "itemName": "Red Baron Frozen Pizza", "price": 5.99, "qualityScore": 5, "inStock": true },
+      { "itemName": "Cucumbers", "price": 1.00, "qualityScore": 6, "inStock": true },
+      { "itemName": "La Croix Sparkling Water", "price": 5.49, "qualityScore": 6, "inStock": true }
     ]
   },
   {
     "id": "store-002",
     "name": "Budget Bites",
     "category": "Groceries",
-    "location": "456 Oak Ave",
+    "lat": 37.9739,
+    "long": -122.5233,
+    "location": "75 Bellam Blvd, San Rafael, CA 94901",
     "inventory": [
       { "itemName": "flour", "price": 2.75, "qualityScore": 5, "inStock": true },
       { "itemName": "sugar", "price": 2.00, "qualityScore": 5, "inStock": true },
@@ -82,14 +96,26 @@
       { "itemName": "ground coffee", "price": 7.00, "qualityScore": 6, "inStock": true },
       { "itemName": "black tea", "price": 3.00, "qualityScore": 5, "inStock": true },
       { "itemName": "yogurt", "price": 1.00, "qualityScore": 6, "inStock": true },
-      { "itemName": "frozen burritos", "price": 1.50, "qualityScore": 4, "inStock": true }
+      { "itemName": "frozen burritos", "price": 1.50, "qualityScore": 4, "inStock": true },
+      { "itemName": "Bulk Almonds", "price": 8.99, "qualityScore": 7, "inStock": true },
+      { "itemName": "Case of Canned Corn", "price": 10.00, "qualityScore": 5, "inStock": true },
+      { "itemName": "Imported Olive Oil", "price": 9.50, "qualityScore": 8, "inStock": true },
+      { "itemName": "Quinoa", "price": 4.99, "qualityScore": 7, "inStock": true },
+      { "itemName": "Plant-based Sausages", "price": 5.99, "qualityScore": 6, "inStock": true },
+      { "itemName": "Variety Pack of Chips", "price": 6.99, "qualityScore": 5, "inStock": true },
+      { "itemName": "K-Cup Coffee Pods", "price": 19.99, "qualityScore": 6, "inStock": true },
+      { "itemName": "Sparkling Apple Cider", "price": 3.50, "qualityScore": 7, "inStock": true },
+      { "itemName": "Bag of Bell Peppers", "price": 4.00, "qualityScore": 6, "inStock": true },
+      { "itemName": "Hummus", "price": 3.99, "qualityScore": 7, "inStock": true }
     ]
   },
   {
     "id": "store-003",
     "name": "Organic Emporium",
     "category": "Groceries",
-    "location": "789 Maple Rd",
+    "lat": 37.9718,
+    "long": -122.5312,
+    "location": "340 Third St, San Rafael, CA 94901",
     "inventory": [
       { "itemName": "organic all-purpose flour", "price": 5.50, "qualityScore": 9, "inStock": true },
       { "itemName": "organic cane sugar", "price": 4.50, "qualityScore": 9, "inStock": true },
@@ -123,28 +149,40 @@
       { "itemName": "organic steel-cut oats", "price": 5.00, "qualityScore": 9, "inStock": true },
       { "itemName": "organic fair-trade coffee", "price": 15.00, "qualityScore": 10, "inStock": true },
       { "itemName": "organic green tea", "price": 6.00, "qualityScore": 9, "inStock": true },
-      { "itemName": "organic greek yogurt", "price": 2.50, "qualityScore": 9, "inStock": true }
+      { "itemName": "organic greek yogurt", "price": 2.50, "qualityScore": 9, "inStock": true },
+      { "itemName": "Kombucha", "price": 4.50, "qualityScore": 9, "inStock": true },
+      { "itemName": "Organic Kale", "price": 3.99, "qualityScore": 10, "inStock": true },
+      { "itemName": "Grass-fed Ribeye Steak", "price": 24.99, "qualityScore": 10, "inStock": true },
+      { "itemName": "Vegan Cheese", "price": 7.99, "qualityScore": 8, "inStock": true },
+      { "itemName": "Acai Berry Packets", "price": 8.50, "qualityScore": 9, "inStock": true },
+      { "itemName": "Gluten-Free Pasta", "price": 5.49, "qualityScore": 8, "inStock": true },
+      { "itemName": "Artisanal Sourdough", "price": 8.00, "qualityScore": 10, "inStock": true },
+      { "itemName": "Cold-pressed Green Juice", "price": 9.99, "qualityScore": 9, "inStock": true },
+      { "itemName": "Manuka Honey", "price": 29.99, "qualityScore": 10, "inStock": true },
+      { "itemName": "Bulk Chia Seeds", "price": 6.00, "qualityScore": 8, "inStock": true }
     ]
   },
   {
     "id": "store-004",
     "name": "Tech Galaxy",
     "category": "Electronics",
-    "location": "101 Cyber Way",
+    "lat": 37.9654,
+    "long": -122.5073,
+    "location": "600 Francisco Blvd W, San Rafael, CA 94901",
     "inventory": [
       { "itemName": "Nvidia GeForce RTX 5090", "price": 2999.00, "qualityScore": 10, "inStock": true },
       { "itemName": "Nvidia GeForce RTX 5080", "price": 1499.00, "qualityScore": 9, "inStock": true },
-      { "itemName": "Nvidia GeForce RTX 5070 Ti", "price": 899.00, "qualityScore": 8, "inStock": true },
-      { "itemName": "Nvidia GeForce RTX 5070", "price": 699.00, "qualityScore": 8, "inStock": true },
-      { "itemName": "Nvidia GeForce RTX 5060 Ti", "price": 479.00, "qualityScore": 7, "inStock": true },
+      { "itemName": "Nvidia GeForce RTX 5070 Ti", "price": 899.00, "qualityScore": 7, "inStock": true },
+      { "itemName": "Nvidia GeForce RTX 5070", "price": 699.00, "qualityScore": 6, "inStock": true },
+      { "itemName": "Nvidia GeForce RTX 5060 Ti", "price": 479.00, "qualityScore": 5, "inStock": true },
       { "itemName": "AMD Radeon RX 9070 XT", "price": 750.00, "qualityScore": 8, "inStock": true },
-      { "itemName": "AMD Radeon RX 7800 XT", "price": 550.00, "qualityScore": 7, "inStock": true },
-      { "itemName": "Intel Arc B580", "price": 300.00, "qualityScore": 6, "inStock": true },
+      { "itemName": "AMD Radeon RX 7800 XT", "price": 550.00, "qualityScore": 6, "inStock": true },
+      { "itemName": "Intel Arc B580", "price": 300.00, "qualityScore": 5, "inStock": true },
       { "itemName": "AMD Ryzen 9 9950X3D", "price": 649.00, "qualityScore": 10, "inStock": true },
       { "itemName": "Intel Core i9-14900K", "price": 580.00, "qualityScore": 10, "inStock": true },
       { "itemName": "AMD Ryzen 7 7800X3D", "price": 385.00, "qualityScore": 9, "inStock": true },
-      { "itemName": "Intel Core i5-14600KF", "price": 290.00, "qualityScore": 8, "inStock": true },
-      { "itemName": "AMD Ryzen 5 9600X", "price": 240.00, "qualityScore": 7, "inStock": true },
+      { "itemName": "Intel Core i5-14600KF", "price": 290.00, "qualityScore": 6, "inStock": true },
+      { "itemName": "AMD Ryzen 5 9600X", "price": 240.00, "qualityScore": 5, "inStock": true },
       { "itemName": "ASUS ROG MAXIMUS Z790 HERO", "price": 650.00, "qualityScore": 10, "inStock": true },
       { "itemName": "GIGABYTE X870E AORUS PRO", "price": 350.00, "qualityScore": 9, "inStock": true },
       { "itemName": "MSI PRO Z790-P WIFI", "price": 200.00, "qualityScore": 7, "inStock": true },
@@ -189,7 +227,9 @@
     "id": "store-005",
     "name": "DIY Depot",
     "category": "Hardware",
-    "location": "202 Builder Blvd",
+    "lat": 37.958,
+    "long": -122.503,
+    "location": "111 Shoreline Pkwy, San Rafael, CA 94901",
     "inventory": [
       { "itemName": "hammer", "price": 15.00, "qualityScore": 8, "inStock": true },
       { "itemName": "claw hammer", "price": 20.00, "qualityScore": 8, "inStock": true },
@@ -221,6 +261,48 @@
       { "itemName": "work gloves", "price": 15.00, "qualityScore": 8, "inStock": true },
       { "itemName": "ladder", "price": 150.00, "qualityScore": 8, "inStock": true },
       { "itemName": "wheelbarrow", "price": 100.00, "qualityScore": 7, "inStock": true }
+    ]
+  },
+  {
+    "id": "store-006",
+    "name": "B Street 76",
+    "category": "Gas",
+    "lat": 37.9719,
+    "long": -122.529,
+    "location": "800 B St, San Rafael, CA 94901",
+    "inventory": [
+      { "itemName": "standard", "price": 4.19, "qualityScore": 3, "inStock": true },
+      { "itemName": "premium", "price": 4.69, "qualityScore": 5, "inStock": true },
+      { "itemName": "ultra premium", "price": 4.99, "qualityScore": 8, "inStock": true },
+      { "itemName": "diesel", "price": 4.49, "qualityScore": 8, "inStock": true }
+    ]
+  },
+  {
+    "id": "store-007",
+    "name": "E. Francisco Chevron",
+    "category": "Gas",
+    "lat": 37.9649,
+    "long": -122.5028,
+    "location": "998 E Francisco Blvd, San Rafael, CA 94901",
+    "inventory": [
+      { "itemName": "standard", "price": 4.85, "qualityScore": 3, "inStock": true },
+      { "itemName": "premium", "price": 5.15, "qualityScore": 5, "inStock": true },
+      { "itemName": "ultra premium", "price": 5.35, "qualityScore": 8, "inStock": true },
+      { "itemName": "diesel", "price": 5.25, "qualityScore": 8, "inStock": true }
+    ]
+  },
+  {
+    "id": "store-008",
+    "name": "Bellam ARCO",
+    "category": "Gas",
+    "lat": 37.9741,
+    "long": -122.5222,
+    "location": "150 Bellam Blvd, San Rafael, CA 94901",
+    "inventory": [
+      { "itemName": "standard", "price": 4.75, "qualityScore": 3, "inStock": true },
+      { "itemName": "premium", "price": 4.99, "qualityScore": 5, "inStock": true },
+      { "itemName": "ultra premium", "price": 5.19, "qualityScore": 8, "inStock": true },
+      { "itemName": "diesel", "price": 5.09, "qualityScore": 8, "inStock": true }
     ]
   }
 ]
