@@ -1,5 +1,5 @@
 # AI-Powered Shopping Assistant #
-Overview
+## Overview ##
 
 This project is an advanced, AI-powered shopping assistant designed to help users find the best local options for their shopping needs. It features a conversational chat interface where users can make natural language requests (e.g., "I need to build a budget gaming PC," "what do I need for pancakes?") and receive intelligent, context-aware recommendations.
 
@@ -9,8 +9,8 @@ The application is comprised of two main components:
 
     A React Frontend that provides a user-friendly chat interface with summaries powered by groq, and a Leaflet.js map for visualizing store locations.
 
-Architecture
-Backend (/backend)
+## Architecture ##
+### Backend (/backend) ###
 
 The backend is built with Python and Flask, and its core intelligence resides in a unified agent model.
 
@@ -32,7 +32,7 @@ The backend is built with Python and Flask, and its core intelligence resides in
 
     requirements.txt: Lists all necessary Python dependencies.
 
-Frontend (/chat-interface)
+### Frontend (/chat-interface) ###
 
 The frontend is a modern React application built with Vite.
 
@@ -50,8 +50,8 @@ The frontend is a modern React application built with Vite.
 
         Integrates a react-leaflet map to display store locations (functionality for linking chat recommendations to the map is a potential future enhancement).
 
-Setup & Installation
-Prerequisites
+## Setup & Installation ##
+## Prerequisites ##
 
     Python 3.8+ and packages listed in requirements.txt
 
@@ -91,7 +91,7 @@ Prerequisites
 
     npm install
 
-Running the Application
+## Running the Application## 
 
 You must have both the backend and frontend servers running simultaneously in separate terminal windows.
 
