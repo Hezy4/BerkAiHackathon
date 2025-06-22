@@ -105,18 +105,18 @@
       {"Item": "Coffee (bag)", "Price": 4.50, "Quality": "Middle"}
     ]
   },
-  {
-    "id": "store-005",
-    "name": "Woodlands Market",
-    "lat": 37.9275,
-    "lon": -122.5170,
+    {
+    "id": "store-008",
+    "name": "Mollie Stone's Market",
+    "lat": 37.9340,
+    "lon": -122.5980,
     "tags": {
-      "addr:street": "1550 Tiburon Blvd",
-      "addr:city": "Tiburon",
-      "addr:postcode": "94920",
+      "addr:street": "414 Miller Ave",
+      "addr:city": "Mill Valley",
+      "addr:postcode": "94941",
       "opening_hours": "7:00 AM - 9:00 PM",
       "organic": "Yes",
-      "rating": "4.3/5"
+      "rating": "4.4/5"
     }
   }
 ]
