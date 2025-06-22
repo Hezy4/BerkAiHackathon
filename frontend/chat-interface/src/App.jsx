@@ -280,7 +280,7 @@ function App() {
       >
         <div className="app">
           <header className="app-header">
-            <h1>Grocery Assistant</h1>
+            <h1>Shopping Assistant</h1>
             <button 
               onClick={toggleTheme} 
               className="theme-toggle" 
