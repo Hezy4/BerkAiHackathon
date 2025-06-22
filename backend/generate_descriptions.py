@@ -15,22 +15,54 @@ except Exception as e:
     exit(1)
 
 def generate_store_description(store):
-    """Generate a description for a store using Groq AI"""
+    """Generate a detailed and engaging description for a store using Groq AI"""
     name = store['name']
     tags = store.get('tags', {})
+    category = store.get('category', 'grocery store')
     
-    # Prepare the prompt
-    prompt = f"""Generate a concise, engaging 2-3 sentence description for a grocery store called "{name}"""
+    # Prepare the prompt with strict instructions for a concise description
+    prompt = f"""Write exactly 3-5 sentences describing "{name}", a {category}. """
     
-    # Add additional context if available
+    # Add location context if available
     if 'addr:street' in tags and 'addr:city' in tags:
-        prompt += f" located at {tags['addr:street']} in {tags['addr:city']}"
-    if 'organic' in tags:
-        prompt += f" that offers {tags['organic'].lower()} organic products"
-    if 'rating' in tags:
-        prompt += f" with a {tags['rating']} rating"
+        prompt += f"The store is located at {tags['addr:street']} in {tags['addr:city']}. "
     
-    prompt += ". The description should be friendly, professional, and highlight what makes this store special."
+    # Add specific instructions for conciseness and quality
+    prompt += """
+    RULES:
+    - Must be exactly 3-5 complete sentences
+    - Each sentence should be clear and concise
+    - Focus on what makes this store unique
+    - Include key products or services
+    - Keep it engaging but professional
+    - No bullet points or lists
+    - No quotation marks
+    - No line breaks or paragraph breaks
+    - No more than 5 sentences total
+    
+    Example format (but specific to this store):
+    "Store Name offers quality products in a welcoming environment. Our specialty is X and Y. Customers love our Z. Visit us today for exceptional service."
+    """
+    
+    # Add inventory context if available
+    if 'inventory' in store and store['inventory']:
+        # Get unique categories from inventory
+        categories = list(set(item.get('category', '') for item in store['inventory'] if item.get('category')))
+        if categories:
+            prompt += f"\nThe store offers products in categories like: {', '.join(categories[:5])}."
+    
+    # Add rating context if available
+    if 'rating' in tags:
+        prompt += f" With a rating of {tags['rating']}, "
+        if float(tags['rating']) >= 4.0:
+            prompt += "it's a customer favorite known for its quality and service."
+        else:
+            prompt += "it provides good value to the local community."
+    
+    prompt += """
+    The description should be written in a friendly, conversational tone that makes customers want to visit.
+    Avoid using the store's name more than once in the description.
+    """
     
     try:
         # Call Groq API

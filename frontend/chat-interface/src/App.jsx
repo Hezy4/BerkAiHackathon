@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
+// Import is no longer needed as we'll use stores.json
 import { FiSun, FiMoon, FiMessageSquare } from 'react-icons/fi';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -46,80 +47,51 @@ function App() {
   const startX = useRef(0);
   const startWidth = useRef(0);
   
-  // Fetch nearby grocery stores using Overpass API
-  const fetchNearbyGroceryStores = async (lat, lon, radius = 2000) => {
+  // Load grocery stores from local JSON file
+  const fetchLocalGroceryStores = async () => {
     try {
-      const overpassUrl = 'https://overpass-api.de/api/interpreter';
-      const query = `
-        [out:json];
-        (
-          node["shop"="supermarket"](around:${radius},${lat},${lon});
-          node["shop"="grocery"](around:${radius},${lat},${lon});
-          way["shop"="supermarket"](around:${radius},${lat},${lon});
-          way["shop"="grocery"](around:${lat},${lon});
-          relation["shop"="supermarket"](around:${radius},${lat},${lon});
-          relation["shop"="grocery"](around:${radius},${lat},${lon});
-        );
-        out body;
-        >;
-        out skel qt;
-      `;
-      
-      const response = await fetch(`${overpassUrl}?data=${encodeURIComponent(query)}`);
-      const data = await response.json();
-      console.log('Raw API response:', data);
-      
-      // Process the data to get unique stores with names and coordinates
-      const stores = [];
-      const seen = new Set();
-      
-      if (!data || !data.elements) {
-        console.error('Unexpected API response format:', data);
-        return [];
+      const response = await fetch('/data/stores.json');
+      if (!response.ok) {
+        throw new Error('Failed to load stores data');
       }
+      const data = await response.json();
       
-      data.elements.forEach(element => {
-        if (element.tags && element.tags.name) {
-          let lat, lon;
-          
-          if (element.type === 'node') {
-            lat = element.lat;
-            lon = element.lon;
-          } else if (element.center) {
-            // For ways and relations, use the center point
-            lat = element.center.lat;
-            lon = element.center.lon;
-          } else if (element.nodes && element.nodes.length > 0) {
-            // Fallback: use the first node's coordinates
-            const firstNode = data.elements.find(el => el.type === 'node' && el.id === element.nodes[0]);
-            if (firstNode) {
-              lat = firstNode.lat;
-              lon = firstNode.lon;
-            } else {
-              return; // Skip if we can't get coordinates
-            }
-          } else {
-            return; // Skip if we can't get coordinates
+      // Transform the data to match the expected format
+      const stores = data.map(store => {
+        // Create address parts from the location string
+        const [street, ...cityParts] = store.location.split(',').map(s => s.trim());
+        const city = cityParts.join(', ');
+        
+        // Use the store's tags if they exist, otherwise create default tags
+        const tags = store.tags || {};
+        
+        return {
+          id: store.id,
+          name: store.name,
+          lat: store.lat,
+          lon: store.long, // Note: using 'long' from the JSON to match 'lon' in the app
+          category: store.category,
+          location: store.location,
+          inventory: store.inventory || [],
+          // Use the rating from tags if available, otherwise default to 4.0
+          rating: tags.rating || 4.0,
+          // Include all tags with proper structure
+          tags: {
+            description: tags.description || `${store.name} is a ${store.category} located at ${store.location}`,
+            'addr:street': tags['addr:street'] || street,
+            'addr:city': tags['addr:city'] || city,
+            'addr:postcode': tags['addr:postcode'] || '94941',
+            'opening_hours': tags['opening_hours'] || 'Mo-Su 08:00-22:00',
+            'phone': tags['phone'] || store.phone || '(415) 555-1234',
+            'website': tags['website'] || store.website || `https://${store.name.toLowerCase().replace(/\s+/g, '')}.com`
           }
-          
-          const storeKey = `${element.tags.name}-${lat}-${lon}`;
-          
-          if (!seen.has(storeKey)) {
-            seen.add(storeKey);
-            stores.push({
-              id: element.id,
-              name: element.tags.name,
-              lat,
-              lon,
-              tags: element.tags
-            });
-          }
-        }
+        };
       });
       
+      console.log('Loaded local stores:', stores);
       return stores;
     } catch (error) {
-      console.error('Error fetching grocery stores:', error);
+      console.error('Error loading local grocery stores:', error);
       return [];
     }
   };
@@ -146,72 +118,40 @@ function App() {
     loadGroceryStores();
   }, []);
 
-  // Set the address location and fetch nearby grocery stores
+  // Load local grocery stores data
   useEffect(() => {
-    const address = '835 College Ave, Kentfield, CA 94904';
-    const fetchData = async () => {
+    const loadStores = async () => {
       setIsLoading(true);
       try {
-        // Get coordinates for the address
-        const geocodeResponse = await fetch(
-          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`
-        );
-        const geocodeData = await geocodeResponse.json();
-        
-        if (geocodeData && geocodeData[0]) {
-          const { lat, lon } = geocodeData[0];
-          const coordinates = [parseFloat(lat), parseFloat(lon)];
-          setUserLocation(coordinates);
-          
-          // Fetch nearby grocery stores
-          const stores = await fetchNearbyGroceryStores(lat, lon);
-          console.log('Found grocery stores:', stores);
-          
-          // Use sample data if no stores found or API fails
-          const storesToShow = stores.length > 0 ? stores : sampleGroceryStores;
-          setGroceryStores(storesToShow);
-          
-          if (stores.length === 0) {
-            console.warn('No grocery stores found in the area. Using sample data.');
-          }
-          
-          if (mapRef.current) {
-            mapRef.current.flyTo(coordinates, 15);
-          }
-        } else {
-          throw new Error('Address not found');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        setLocationError('Unable to load location data');
+        // Use default coordinates for the map center
         setUserLocation(MAP_CONFIG.defaultCoords);
         
-        // Try to fetch stores with default coordinates
-        const stores = await fetchNearbyGroceryStores(
-          MAP_CONFIG.defaultCoords[0], 
-          MAP_CONFIG.defaultCoords[1]
-        );
-        console.log('Using default coordinates. Found stores:', stores);
+        // Load stores from local JSON
+        const stores = await fetchLocalGroceryStores();
+        console.log('Loaded stores:', stores);
         
-        // Use sample data if no stores found or API fails
-        const storesToShow = stores.length > 0 ? stores : sampleGroceryStores;
-        setGroceryStores(storesToShow);
-        
-        if (stores.length === 0) {
-          console.warn('No grocery stores found with default coordinates. Using sample data.');
+        if (stores.length > 0) {
+          setGroceryStores(stores);
+          
+          // Center the map on the first store if available
+          if (mapRef.current && stores[0]) {
+            mapRef.current.flyTo([stores[0].lat, stores[0].lon], 15);
+          }
+        } else {
+          console.warn('No stores found in the local data');
+          setLocationError('No stores data available');
         }
-        
-        if (mapRef.current) {
-          mapRef.current.flyTo(MAP_CONFIG.defaultCoords, MAP_CONFIG.defaultZoom);
-        }
+      } catch (error) {
+        console.error('Error loading stores:', error);
+        setLocationError('Failed to load stores data');
       } finally {
         setIsLoading(false);
       }
     };
-
-    fetchData();
+    
+    loadStores();
   }, []);
-  
+
   // Toggle theme and save preference
   const toggleTheme = () => {
     const newMode = !isDarkMode;
@@ -453,68 +393,54 @@ function App() {
                     <div className="store-popup-content">
                       <div className="store-header">
                         <h3>{store.name}</h3>
-                        {store.tags.rating && (
-                          <div className="store-rating">
-                            <span className="rating-star">★</span> {store.tags.rating}
-                          </div>
-                        )}
+                        <div className="store-rating">
+                          <span className="rating-star">★</span> {store.rating.toFixed(1)}
+                        </div>
                       </div>
                       
-                      {store.tags.description && (
-                        <div className="store-description-container">
-                          <div className="store-description-icon">💬</div>
-                          <p className="store-description">{store.tags.description}</p>
-                        </div>
-                      )}
+                      <div className="store-category">
+                        <span className="category-tag">{store.category}</span>
+                      </div>
+                      
+                      <div className="store-description-container">
+                        <div className="store-description-icon">💬</div>
+                        <p className="store-description">{store.tags.description}</p>
+                      </div>
                       
                       <div className="store-details">
                         <div className="store-address">
                           <div className="address-icon">📍</div>
                           <div>
-                            {store.tags['addr:street'] && (
-                              <div className="address-street">{store.tags['addr:street']}</div>
-                            )}
-                            {store.tags['addr:city'] && store.tags['addr:postcode'] && (
-                              <div className="address-city">{store.tags['addr:city']}, {store.tags['addr:postcode']}</div>
-                            )}
+                            <div className="address-street">{store.tags['addr:street']}</div>
+                            <div className="address-city">{store.tags['addr:city']}, {store.tags['addr:postcode']}</div>
                           </div>
                         </div>
                         
-                        <div className="store-info">
-                          {store.tags.opening_hours && (
-                            <div className="info-item">
-                              <span className="info-label">🕒 Hours:</span>
-                              <span className="info-value">{store.tags.opening_hours}</span>
-                            </div>
-                          )}
-                          {store.tags.organic && (
-                            <div className="info-item">
-                              <span className="info-label">🌱 Organic:</span>
-                              <span className="info-value">{store.tags.organic}</span>
-                            </div>
-                          )}
+                        <div className="store-hours">
+                          <div className="hours-icon">🕒</div>
+                          <div>{store.tags.opening_hours}</div>
                         </div>
-                        <div className="store-contacts">
-                          {store.tags.phone && (
-                            <div className="contact-item">
-                              <a href={`tel:${store.tags.phone}`} className="contact-link">
-                                📞 {store.tags.phone}
-                              </a>
-                            </div>
-                          )}
-                          {store.tags.website && (
-                            <div className="contact-item">
-                              <a 
-                                href={store.tags.website.startsWith('http') ? store.tags.website : `https://${store.tags.website}`} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="contact-link"
-                              >
-                                🌐 Visit Website
-                              </a>
-                            </div>
-                          )}
+                        
+                        <div className="store-contact">
+                          <div className="contact-icon">📞</div>
+                          <div>{store.tags.phone}</div>
                         </div>
+                        
+                        <div className="store-website">
+                          <div className="website-icon">🌐</div>
+                          <a href={store.tags.website} target="_blank" rel="noopener noreferrer">
+                            {store.tags.website.replace(/^https?:\/\//, '')}
+                          </a>
+                        </div>
+                      </div>
+                      
+                      <div className="store-actions">
+                        <button 
+                          className="action-button directions-button"
+                          onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${store.lat},${store.lon}`, '_blank')}
+                        >
+                          Directions
+                        </button>
                       </div>
                     </div>
                   </Popup>
