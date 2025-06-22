@@ -284,9 +284,7 @@
         "inStock": true
       }
     ],
-    "tags": {
-      "description": "SuperMart Grocers is your one-stop destination for all your grocery needs, offering a wide range of fresh produce, meats, and dairy products. Our knowledgeable staff is always happy to help you find what you're looking for, and our weekly sales on staples like bread, milk, and eggs will keep your wallet happy. From gourmet prepared meals to specialty international ingredients, our aisles are stocked with everything you need to create a delicious meal at home."
-    }
+    "rating": 4.7
   },
   {
     "id": "store-002",
@@ -561,9 +559,7 @@
         "inStock": true
       }
     ],
-    "tags": {
-      "description": "Budget Bites is a haven for those seeking affordable luxury in their grocery shopping experience. Our shelves are stocked with a curated selection of gourmet staples, artisanal cheeses, and locally sourced produce, making it easy to elevate your culinary game without breaking the bank. From fresh bread to specialty spices, every item is carefully chosen to satisfy your cravings and delight your senses."
-    }
+    "rating": 4.3
   },
   {
     "id": "store-003",
@@ -832,9 +828,7 @@
         "inStock": true
       }
     ],
-    "tags": {
-      "description": "Organic Emporium is a haven for health-conscious shoppers, offering a curated selection of non-GMO and organic produce, meats, and packaged goods. Our knowledgeable staff helps customers navigate the aisles to find the perfect natural alternatives to mainstream brands. With a focus on sustainable living, we also carry eco-friendly household essentials and body care products."
-    }
+    "rating": 3.9
   },
   {
     "id": "store-004",
@@ -1151,9 +1145,7 @@
         "inStock": true
       }
     ],
-    "tags": {
-      "description": "Tech Galaxy is a cutting-edge electronics store that brings the latest innovations to life. With a vast selection of gadgets and gizmos, you'll find everything from smart home devices to high-performance gaming laptops. From expert advice to competitive pricing, Tech Galaxy's knowledgeable staff will help you navigate the world of technology and find the perfect solution for your needs."
-    }
+    "rating": 3.2
   },
   {
     "id": "store-005",
@@ -1344,9 +1336,7 @@
         "inStock": true
       }
     ],
-    "tags": {
-      "description": "DIY Depot is a one-stop-shop for all your home improvement needs, offering a vast selection of high-quality products and expert advice from knowledgeable staff. From power tools to plumbing fixtures, our extensive range of products will help you tackle any DIY project with confidence. Whether you're a seasoned pro or a beginner, our friendly team is always happy to provide guidance and support to ensure your project turns out just right."
-    }
+    "rating": 3.2
   },
   {
     "id": "store-006",
@@ -1381,9 +1371,7 @@
         "inStock": true
       }
     ],
-    "tags": {
-      "description": "B Street 76 is the go-to destination for all your fueling needs, offering top-notch gasoline and expertly maintained vehicles for sale. Our knowledgeable staff is always happy to help with any questions or concerns, and our convenient location makes it easy to stop by on your way to and from work. With a wide range of fuel types and sizes available, you can trust that we'll have what you need to keep your vehicle running smoothly."
-    }
+    "rating": 3.9
   },
   {
     "id": "store-007",
@@ -1418,9 +1406,7 @@
         "inStock": true
       }
     ],
-    "tags": {
-      "description": "E. Francisco Chevron is your one-stop shop for all your fueling needs. Our friendly staff is always ready to assist you with a wide range of gasoline options and convenient amenities like air compressors and vacuum cleaners. With a convenient location and extended hours, we're the perfect pit stop for your busy day."
-    }
+    "rating": 4.3
   },
   {
     "id": "store-008",
@@ -1455,8 +1441,6 @@
         "inStock": true
       }
     ],
-    "tags": {
-      "description": "Bellam ARCO is your one-stop shop for all your fueling needs, offering a wide range of premium gasoline options to keep your vehicle running smoothly. Our expert staff is always happy to assist with any questions or concerns, and our modern facilities make for a convenient and comfortable stop. With competitive pricing and a loyalty program to reward our frequent customers, you'll want to return again and again."
-    }
+    "rating": 3.2
   }
 ]

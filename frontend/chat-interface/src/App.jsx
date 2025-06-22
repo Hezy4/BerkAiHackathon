@@ -52,7 +52,7 @@ function App() {
     try {
       const response = await fetch('/data/stores.json');
       if (!response.ok) {
-        throw new Error('Failed to load stores data');
+        throw new Error('Failed to load stores data')
       }
       const data = await response.json();
       
@@ -73,8 +73,8 @@ function App() {
           category: store.category,
           location: store.location,
           inventory: store.inventory || [],
-          // Use the rating from tags if available, otherwise default to 4.0
-          rating: tags.rating || 4.0,
+          // Use the store's rating, default to 4.0 if not present
+          rating: typeof store.rating === 'number' ? store.rating : 4.0,
           // Include all tags with proper structure
           tags: {
             description: tags.description || `${store.name} is a ${store.category} located at ${store.location}`,
