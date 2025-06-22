@@ -210,7 +210,7 @@ function App() {
     }
   }, []);
   const [messages, setMessages] = useState([
-    { text: "Hello! I'm your grocery shopping assistant. What ingredients do you need help with today?", sender: 'bot' }
+    { text: "Hello! I'm your shopping assistant. What ingredients do you need help with today?", sender: 'bot' }
   ]);
   const [inputValue, setInputValue] = useState('');
   const messagesEndRef = useRef(null);
