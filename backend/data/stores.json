@@ -22,6 +22,7 @@
       {"Item": "Cereal (box)", "Price": 7.20, "Quality": "High"},
       {"Item": "Pasta (box)", "Price": 2.70, "Quality": "High"},
       {"Item": "Ground Beef (1 lb)", "Price": 9.00, "Quality": "High"},
+      {"Item": "Coffee (bag)", "Price": 16.20, "Quality": "High"}
     ]
   },
   {
