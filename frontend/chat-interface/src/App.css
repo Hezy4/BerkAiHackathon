@@ -667,6 +667,30 @@ body {
   min-height: 0; /* Allows messages container to shrink */
 }
 
+.store-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center; /* Center the button horizontally */
+  gap: 0.5rem;
+  width: 100%; /* Ensure the container takes full width */
+}
+
+.directions-button {
+  width: 100%; /* Make the button take full width of its container */
+  text-align: center; /* Center the text inside the button */
+  padding: 0.5rem 1rem; /* Add some padding for better appearance */
+  background-color: #4a90e2; /* Add a nice blue color */
+  color: white; /* White text for better contrast */
+  border: none; /* Remove default border */
+  border-radius: 4px; /* Slightly rounded corners */
+  cursor: pointer; /* Show pointer cursor on hover */
+  transition: background-color 0.2s; /* Smooth transition for hover effect */
+}
+
+.directions-button:hover {
+  background-color: #357abd; /* Slightly darker blue on hover */
+}
+
 .message {
   max-width: 85%;
   padding: 0.75rem 1rem;
