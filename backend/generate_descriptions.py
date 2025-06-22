@@ -52,9 +52,10 @@ def generate_store_description(store):
             prompt += f"\nThe store offers products in categories like: {', '.join(categories[:5])}."
     
     # Add rating context if available
-    if 'rating' in tags:
-        prompt += f" With a rating of {tags['rating']}, "
-        if float(tags['rating']) >= 4.0:
+    rating = store.get('rating')
+    if rating is not None:
+        prompt += f" With a rating of {rating}, "
+        if float(rating) >= 4.0:
             prompt += "it's a customer favorite known for its quality and service."
         else:
             prompt += "it provides good value to the local community."

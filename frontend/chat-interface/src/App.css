@@ -220,26 +220,35 @@ body {
 
 .store-description-container {
   display: flex;
-  padding: 16px;
+  padding: 12px 16px;
   background-color: rgba(76, 175, 80, 0.08);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  margin-bottom: 0;
+  border-radius: 8px;
+  margin: 12px 0;
+  border-left: 3px solid var(--color-primary);
+  transition: all 0.3s ease;
+}
+
+.store-description-container:hover {
+  background-color: rgba(76, 175, 80, 0.12);
+  transform: translateX(2px);
 }
 
 .store-description-icon {
-  margin-right: 10px;
-  font-size: 1.2rem;
-  opacity: 0.8;
+  margin-right: 12px;
+  font-size: 1.1rem;
+  opacity: 0.9;
   margin-top: 2px;
+  flex-shrink: 0;
 }
 
 .store-description {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: var(--color-text);
   line-height: 1.5;
   flex: 1;
-  font-style: italic;
+  font-style: normal;
+  letter-spacing: 0.01em;
 }
 
 .store-details {
@@ -656,6 +665,30 @@ body {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   min-height: 0; /* Allows messages container to shrink */
+}
+
+.store-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center; /* Center the button horizontally */
+  gap: 0.5rem;
+  width: 100%; /* Ensure the container takes full width */
+}
+
+.directions-button {
+  width: 100%; /* Make the button take full width of its container */
+  text-align: center; /* Center the text inside the button */
+  padding: 0.5rem 1rem; /* Add some padding for better appearance */
+  background-color: #4a90e2; /* Add a nice blue color */
+  color: white; /* White text for better contrast */
+  border: none; /* Remove default border */
+  border-radius: 4px; /* Slightly rounded corners */
+  cursor: pointer; /* Show pointer cursor on hover */
+  transition: background-color 0.2s; /* Smooth transition for hover effect */
+}
+
+.directions-button:hover {
+  background-color: #357abd; /* Slightly darker blue on hover */
 }
 
 .message {
