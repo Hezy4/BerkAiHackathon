@@ -210,7 +210,7 @@ function App() {
     }
   }, []);
   const [messages, setMessages] = useState([
-    { text: "Hello! I'm your shopping assistant. What do you need help finding today?", sender: 'bot' }
+    { text: "Hello! I'm Hermes, your shopping assistant. What do you need help finding today?", sender: 'bot' }
   ]);
   const [inputValue, setInputValue] = useState('');
   const messagesEndRef = useRef(null);
@@ -280,7 +280,7 @@ function App() {
       >
         <div className="app">
           <header className="app-header">
-            <h1>Shopping Assistant</h1>
+            <h1>Hermes</h1>
             <button 
               onClick={toggleTheme} 
               className="theme-toggle" 

@@ -57,7 +57,7 @@ def get_recommendation(raw_request: str, conversation_history: list, stores_db: 
     history_prompt = "\n".join([f"{msg['role'].capitalize()}: {msg['content']}" for msg in full_conversation_for_prompt])
     
     # THE FIX: Hardcode the valid categories as requested by the user for reliability.
-    valid_categories = ["Groceries", "Hardware", "Electronics"]
+    valid_categories = ["Groceries", "Hardware", "Electronics", "Gas"]
 
     prompt_category = f"""
     Analyze the conversation and determine the single most relevant shopping category for the user's latest request.
