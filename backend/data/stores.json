@@ -104,5 +104,19 @@
       {"Item": "Ground Beef (1 lb)", "Price": 2.50, "Quality": "Low"},
       {"Item": "Coffee (bag)", "Price": 4.50, "Quality": "Middle"}
     ]
+  },
+  {
+    "id": "store-005",
+    "name": "Woodlands Market",
+    "lat": 37.8757,
+    "lon": -122.4598,
+    "tags": {
+      "addr:street": "1550 Tiburon Blvd",
+      "addr:city": "Tiburon",
+      "addr:postcode": "94920",
+      "opening_hours": "7:00 AM - 9:00 PM",
+      "organic": "Yes",
+      "rating": "4.3/5"
+    }
   }
 ]
