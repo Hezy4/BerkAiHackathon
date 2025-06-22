@@ -127,20 +127,20 @@ function App() {
   // Sample grocery stores data for demonstration
   const sampleGroceryStores = [
     {
-      id: 'sample-1',
-      name: 'Whole Foods Market',
-      lat: 37.9489,
-      lon: -122.5472,
+      id: 'store-001', //Keep this, change it to "store-###"
+      name: 'Whole Foods Market', //keep this
+      lat: 37.9489, //keep this
+      lon: -122.5472, // keep this
       tags: {
-        'addr:street': '720 Sir Francis Drake Blvd',
-        'addr:city': 'Kentfield',
-        'addr:postcode': '94904',
-        phone: '(415) 925-9426',
-        website: 'https://www.wholefoodsmarket.com',
-        opening_hours: '8:00 AM - 10:00 PM',
-        organic: 'Yes',
-        rating: '4.5/5',
-        description: 'High-end grocery chain with a focus on natural & organic food items, plus household goods.'
+        'addr:street': '720 Sir Francis Drake Blvd', //keep this
+        'addr:city': 'Kentfield', //keep this
+        'addr:postcode': '94904', //keep this
+        //phone: '(415) 925-9426', //remove (Maybe add later as optional? Keep this here to hold the space)
+        // website: 'https://www.wholefoodsmarket.com', //remove (Mauybe add later as optional)
+        opening_hours: '8:00 AM - 10:00 PM', //keep
+        organic: 'Yes', //keep
+        rating: '4.5/5', //remove 
+        description: 'High-end grocery chain with a focus on natural & organic food items, plus household goods.' //remove
       }
     },
     {
