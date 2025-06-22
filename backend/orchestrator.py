@@ -7,7 +7,7 @@ LE = Letta(token="sk-let-OTc4ZTdiMWEtZjkwNi00NDkyLTg3MTUtYmMzMjI0N2RmZGM1OjQ5MWU
 AGENT1_ID = "agent-4f57b6ad-6e5c-4d3e-a6ca-2082e33a8c2b"   # Ingredient Resolver
 AGENT2_ID = "agent-3914019f-6e8f-438d-92c3-605f38b79c9b"   # Store Recommender
 
-filepath = "majorstoreprice.json"
+filepath = "data/storepriceTEST.json"
 
 def load_json_file(filepath):
     with open(filepath, 'r') as f:
@@ -34,6 +34,7 @@ user_request = input()
 
 agentOne = talk(AGENT1_ID, user_request)
 agentOneProcessed = ("AGENT ONE HERE: Heres the data you need to provide the user with the help they need. do not reply to me, reply to them. Store Info (JSON Format): \n(START OF FILE)\n" + storeInfo + "\n(END OF FILE)\nthe ingredients needed (JSON Format): " + agentOne + ". NOW: return the recommendation. ")
+
 agentTwo = talk(AGENT2_ID, agentOneProcessed)
 #print reply from agent 2
 print(agentTwo)
