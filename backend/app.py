@@ -62,7 +62,7 @@ def converse_with_agent():
     print("--- Pipeline End: In-memory history updated. ---")
 
     return jsonify({"response": final_recommendation})
-
+git 
 @app.route('/api/memory/clear', methods=['POST'])
 def clear_memory():
     """An endpoint to wipe the in-memory conversation history."""
@@ -75,4 +75,5 @@ def clear_memory():
 # --- Main Execution ---
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001)
+#n
 
